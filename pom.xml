@@ -17,6 +17,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service</module>
+        <module>common</module>
     </modules>
     <version>1.0.0</version>
     <name>edu-back-end</name>

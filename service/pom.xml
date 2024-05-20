@@ -110,5 +110,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+        <!-- service-base 模块 -->
+        <dependency>
+            <groupId>com.yuunik</groupId>
+            <artifactId>service-base</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
