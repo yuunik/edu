@@ -14,13 +14,14 @@ spring:
     url: jdbc:mysql://localhost:3306/yuunik?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  # json
+  jackson:
+    # 返回 json 的全局时间格式
+    data-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 # mybatis
 mybatis-plus:
   configuration:
     # 输出日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#  global-config:
-#    db-config:
-#      logic-not-delete-field: is_deleted # 全局逻辑删除字段名
-#      logic-delete-value: 1 # 逻辑已删除值
-#      logic-not-delete-value: 0 # 逻辑未删除值
+
