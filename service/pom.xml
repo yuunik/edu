@@ -52,10 +52,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <!--mysql-->
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.18</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
         </dependency>
         <!-- velocity 模板引擎, Mybatis Plus 代码生成器需要 -->
         <dependency>
