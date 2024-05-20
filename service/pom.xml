@@ -116,5 +116,11 @@
             <artifactId>service-base</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- 统一返回结果模块 -->
+        <dependency>
+            <groupId>com.yuunik</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

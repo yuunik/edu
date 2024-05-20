@@ -18,6 +18,7 @@
     </description>
     <modules>
         <module>service-base</module>
+        <module>common-utils</module>
     </modules>
 
 
