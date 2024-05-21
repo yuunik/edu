@@ -2,6 +2,7 @@ package com.yuunik.baseserive.handler;
 
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.utilscommon.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 异常处理类
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     /**
@@ -46,7 +48,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(YuunikException.class)
     @ResponseBody
     public R yuunikExceptionHandler(YuunikException error) {
-        // 输出错误信息
+        /**
+         * 输出错误相关信息
+         */
+        // 输出至日志文件
+        log.error("全局异常处理: " + error.getMessage());
+        // 输出至后台
         error.printStackTrace();
         return R.error().code(error.getCode()).message(error.getMsg());
     }

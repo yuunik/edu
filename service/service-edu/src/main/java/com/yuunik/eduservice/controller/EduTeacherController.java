@@ -42,11 +42,6 @@ public class EduTeacherController {
     @ApiOperation("查询所有的讲师列表")
     @GetMapping("/getTeacherInfoList")
     public R getTeacherInfoList() {
-        try {
-            int result = 10 / 0;
-        } catch (Exception error) {
-            throw new YuunikException(20001, "网络异常, 请稍后再试...");
-        }
         List<EduTeacher> teacherList = eduTeacherService.list(null);
         return R.ok().data("teachList", teacherList);
     }
