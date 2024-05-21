@@ -1,9 +1,11 @@
 package com.yuunik.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuunik.eduservice.entity.EduTeacher;
+import com.yuunik.eduservice.entity.vo.TeacherQuery;
 import com.yuunik.eduservice.service.EduTeacherService;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
@@ -12,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -66,8 +69,6 @@ public class EduTeacherController {
             // 返回响应结果
             Map<String, Object> map = new HashMap<>();
             map.put("total", eduTeacherPage.getTotal());
-            map.put("hasPrevious", eduTeacherPage.hasPrevious());
-            map.put("hasNext", eduTeacherPage.hasNext());
             map.put("records", eduTeacherPage.getRecords());
 
             return R.ok().data(map);
@@ -76,5 +77,56 @@ public class EduTeacherController {
         }
 
     }
+
+    @ApiOperation("根据条件分页查询讲师列表")
+    @PostMapping("/pageTeacherListByCondition/{current}/{limit}")
+    public R pageTeacherListByCondition(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
+                             @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit,
+            @RequestBody(required = false) TeacherQuery teacherQuery) {
+        // 查询条件
+        QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
+        // 分页条件
+        Page<EduTeacher> eduTeacherPage = new Page<>(current, limit);
+        System.out.println("test1------------------------------");
+        // 获取入参
+        String name = teacherQuery.getName();
+        Integer level = teacherQuery.getLevel();
+        String begin = teacherQuery.getBegin();
+        String end = teacherQuery.getEnd();
+        System.out.println("test2------------------------------");
+        // 非空判断
+        if (!StringUtils.isEmpty(name)) {
+            queryWrapper.like("name", name);
+        }
+
+        if (!StringUtils.isEmpty(level)) {
+            queryWrapper.eq("level", level);
+        }
+
+        if (!StringUtils.isEmpty(begin)) {
+            queryWrapper.ge("gmt_create", begin);
+        }
+
+        if (!StringUtils.isEmpty(end)) {
+            queryWrapper.le("gmt_modified", end);
+        }
+        System.out.println("test------------------------------");
+
+        try {
+
+            eduTeacherService.page(eduTeacherPage, queryWrapper);
+
+            // 封装响应结果
+            Map<String, Object> map = new HashMap<>();
+            map.put("total", eduTeacherPage.getTotal());
+            map.put("records", eduTeacherPage.getRecords());
+
+            return R.ok().data(map);
+        } catch (Error err) {
+            return R.error();
+        }
+
+    }
+
 }
 
