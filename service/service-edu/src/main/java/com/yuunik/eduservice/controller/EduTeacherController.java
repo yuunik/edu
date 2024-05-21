@@ -82,7 +82,7 @@ public class EduTeacherController {
     @PostMapping("/pageTeacherListByCondition/{current}/{limit}")
     public R pageTeacherListByCondition(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
                              @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit,
-            @RequestBody(required = false) TeacherQuery teacherQuery) {
+            @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody(required = false) TeacherQuery teacherQuery) {
         // 查询条件
         QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
         // 分页条件
@@ -125,9 +125,34 @@ public class EduTeacherController {
 
     @ApiOperation("添加讲师")
     @PostMapping("/addTeacher")
-    public R addTeacher(@RequestBody(required = true) EduTeacher eduTeacher) {
-        System.out.println("teacher" + eduTeacher.toString());
+    public R addTeacher(@ApiParam(name = "teacherQuery", value = "查询条件对象", required = true) @RequestBody(required = true) EduTeacher eduTeacher) {
         boolean result = eduTeacherService.save(eduTeacher);
+        if (result) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
+    }
+
+    @ApiOperation("根据 id 查询讲师")
+    @GetMapping("/getTeacherById/{id}")
+    public R getTeacherById(@ApiParam(name = "id", value = "讲师 id", required = true) @PathVariable String id) {
+        EduTeacher eduTeacher = eduTeacherService.getById(id);
+
+        if (eduTeacher == null) {
+            return R.error();
+        } else {
+            return R.ok().data("eduTeacher", eduTeacher);
+        }
+    }
+
+    @ApiOperation("修改讲师")
+    @PostMapping("/editTeacher")
+    public R editTeacher(@ApiParam(name = "eduTeacher", value = "讲师对象", required = true) @RequestBody EduTeacher eduTeacher) {
+        System.out.println(eduTeacher);
+        // 调用接口, 修改讲师
+        boolean result = eduTeacherService.updateById(eduTeacher);
+        // 判断
         if (result) {
             return R.ok();
         } else {
