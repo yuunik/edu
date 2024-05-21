@@ -19,9 +19,14 @@ spring:
     # 返回 json 的全局时间格式
     data-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
+# 日志输出相关配置
 # mybatis
 mybatis-plus:
   configuration:
     # 输出日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+# 设置日志级别
+logging:
+  level:
+    root: INFO
