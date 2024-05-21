@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -81,8 +80,8 @@ public class EduTeacherController {
     @ApiOperation("根据条件分页查询讲师列表")
     @PostMapping("/pageTeacherListByCondition/{current}/{limit}")
     public R pageTeacherListByCondition(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
-                             @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit,
-            @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody(required = false) TeacherQuery teacherQuery) {
+                                        @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit,
+                                        @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody(required = false) TeacherQuery teacherQuery) {
         // 查询条件
         QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
         // 分页条件
