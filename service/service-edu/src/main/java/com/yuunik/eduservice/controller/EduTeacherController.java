@@ -4,6 +4,7 @@ package com.yuunik.eduservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduTeacher;
 import com.yuunik.eduservice.entity.vo.TeacherQuery;
 import com.yuunik.eduservice.service.EduTeacherService;
@@ -41,6 +42,11 @@ public class EduTeacherController {
     @ApiOperation("查询所有的讲师列表")
     @GetMapping("/getTeacherInfoList")
     public R getTeacherInfoList() {
+        try {
+            int result = 10 / 0;
+        } catch (Exception error) {
+            throw new YuunikException(20001, "网络异常, 请稍后再试...");
+        }
         List<EduTeacher> teacherList = eduTeacherService.list(null);
         return R.ok().data("teachList", teacherList);
     }
@@ -158,6 +164,5 @@ public class EduTeacherController {
             return R.error();
         }
     }
-
 }
 
