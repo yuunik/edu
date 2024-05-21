@@ -87,13 +87,11 @@ public class EduTeacherController {
         QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
         // 分页条件
         Page<EduTeacher> eduTeacherPage = new Page<>(current, limit);
-        System.out.println("test1------------------------------");
         // 获取入参
         String name = teacherQuery.getName();
         Integer level = teacherQuery.getLevel();
         String begin = teacherQuery.getBegin();
         String end = teacherQuery.getEnd();
-        System.out.println("test2------------------------------");
         // 非空判断
         if (!StringUtils.isEmpty(name)) {
             queryWrapper.like("name", name);
@@ -110,10 +108,8 @@ public class EduTeacherController {
         if (!StringUtils.isEmpty(end)) {
             queryWrapper.le("gmt_modified", end);
         }
-        System.out.println("test------------------------------");
 
         try {
-
             eduTeacherService.page(eduTeacherPage, queryWrapper);
 
             // 封装响应结果
@@ -125,7 +121,18 @@ public class EduTeacherController {
         } catch (Error err) {
             return R.error();
         }
+    }
 
+    @ApiOperation("添加讲师")
+    @PostMapping("/addTeacher")
+    public R addTeacher(@RequestBody(required = true) EduTeacher eduTeacher) {
+        System.out.println("teacher" + eduTeacher.toString());
+        boolean result = eduTeacherService.save(eduTeacher);
+        if (result) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
     }
 
 }
