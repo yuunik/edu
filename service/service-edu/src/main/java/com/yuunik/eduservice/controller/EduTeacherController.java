@@ -33,6 +33,7 @@ import java.util.Map;
 @Api(description = "讲师管理模块接口")
 @RestController
 @RequestMapping("/eduservice/edu-teacher")
+@CrossOrigin
 public class EduTeacherController {
     private static final Logger log = LoggerFactory.getLogger(EduTeacherController.class);
     @Autowired
