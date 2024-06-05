@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.NumberUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -81,50 +82,47 @@ public class EduTeacherController {
     @ApiOperation("根据条件分页查询讲师列表")
     @PostMapping("/pageTeacherListByCondition/{current}/{pageSize}")
     public R pageTeacherListByCondition(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
-                                        @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long pageSize,
-                                        @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody(required = false) TeacherQuery teacherQuery) {
-        // 查询条件
-        QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
+                                        @ApiParam(name = "pageSize", value = "每页条数", required = true) @PathVariable long pageSize,
+                                        @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody TeacherQuery teacherQuery) {
         // 分页条件
         Page<EduTeacher> eduTeacherPage = new Page<>(current, pageSize);
+        // 查询条件
+        QueryWrapper<EduTeacher> eduTeacherQueryWrapper = new QueryWrapper<>();
 
-        // 讲师查询条件非空判断
-        if (teacherQuery.getLevel() != 0) {
-            // 获取入参
-            String name = teacherQuery.getName();
-            Integer level = teacherQuery.getLevel();
-            String begin = teacherQuery.getBegin();
-            String end = teacherQuery.getEnd();
+        // 获取查询条件
+        String name = teacherQuery.getName();
+        Integer level = teacherQuery.getLevel();
+        String begin = teacherQuery.getBegin();
+        String end = teacherQuery.getEnd();
 
-            // 非空判断
-            if (!StringUtils.isEmpty(name)) {
-                queryWrapper.like("name", name);
-            }
-
-            if (!StringUtils.isEmpty(level)) {
-                queryWrapper.eq("level", level);
-            }
-
-            if (!StringUtils.isEmpty(begin)) {
-                queryWrapper.ge("gmt_create", begin);
-            }
-
-            if (!StringUtils.isEmpty(end)) {
-                queryWrapper.le("gmt_modified", end);
-            }
+        // 非空判断
+        if (!StringUtils.isEmpty(name)) {
+            eduTeacherQueryWrapper.like("name", name);
+        }
+        if (!StringUtils.isEmpty(level) && level != 0) {
+            eduTeacherQueryWrapper.eq("level", level);
+        }
+        if (!StringUtils.isEmpty(begin)) {
+            eduTeacherQueryWrapper.ge("gmt_create", begin);
+        }
+        if (!StringUtils.isEmpty(end)) {
+            eduTeacherQueryWrapper.le("gmt_create", end);
         }
 
-
         try {
-            eduTeacherService.page(eduTeacherPage, queryWrapper);
+            // 调用接口, 动态查询讲师列表
+            eduTeacherService.page(eduTeacherPage, eduTeacherQueryWrapper);
 
-            // 封装响应结果
-            Map<String, Object> map = new HashMap<>();
-            map.put("total", eduTeacherPage.getTotal());
-            map.put("records", eduTeacherPage.getRecords());
+            // 封装返回结果
+            Map<String, Object> resMap = new HashMap<>();
+            // 封装查询数据
+            resMap.put("records", eduTeacherPage.getRecords());
+            resMap.put("total", eduTeacherPage.getTotal());
 
-            return R.ok().data(map);
+            return R.ok().data(resMap);
         } catch (Exception e) {
+            // 打印异常信息
+            e.printStackTrace();
             return R.error();
         }
     }
