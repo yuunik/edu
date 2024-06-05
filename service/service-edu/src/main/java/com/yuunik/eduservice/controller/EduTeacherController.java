@@ -59,11 +59,11 @@ public class EduTeacherController {
     }
 
     @ApiOperation("分页查询讲师列表")
-    @GetMapping("/pageTeacherList/{current}/{limit}")
+    @GetMapping("/pageTeacherList/{current}/{pageSize}")
     public R pageTeacherList(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
-                             @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit) {
+                             @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long pageSize) {
         try {
-            Page<EduTeacher> eduTeacherPage = new Page<>(current, limit);
+            Page<EduTeacher> eduTeacherPage = new Page<>(current, pageSize);
             eduTeacherService.page(eduTeacherPage, null);
 
             // 返回响应结果
@@ -79,17 +79,17 @@ public class EduTeacherController {
     }
 
     @ApiOperation("根据条件分页查询讲师列表")
-    @PostMapping("/pageTeacherListByCondition/{current}/{limit}")
+    @PostMapping("/pageTeacherListByCondition/{current}/{pageSize}")
     public R pageTeacherListByCondition(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
-                                        @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long limit,
+                                        @ApiParam(name = "limit", value = "每页条数", required = true) @PathVariable long pageSize,
                                         @ApiParam(name = "teacherQuery", value = "查询条件对象", required = false) @RequestBody(required = false) TeacherQuery teacherQuery) {
-        System.out.println("当前页为" +  current);
-        System.out.println("每页条数为" + limit);
         // 查询条件
         QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
         // 分页条件
-        Page<EduTeacher> eduTeacherPage = new Page<>(current, limit);
-        if (!ObjectUtils.isEmpty(teacherQuery)) {
+        Page<EduTeacher> eduTeacherPage = new Page<>(current, pageSize);
+
+        // 讲师查询条件非空判断
+        if (teacherQuery.getLevel() != 0) {
             // 获取入参
             String name = teacherQuery.getName();
             Integer level = teacherQuery.getLevel();
