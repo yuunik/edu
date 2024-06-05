@@ -22,7 +22,7 @@ public class EduLoginController {
     }
 
     @ApiOperation("获取用户信息")
-    @GetMapping("/getUserInfo")
+    @GetMapping("/info")
     public R getUserInfo() {
         return R.ok().data("role", "[admin]").data("name", "yuunik").data("avatar", "https://avatars.githubusercontent.com/u/144108395?s=48&v=4");
     }
