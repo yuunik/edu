@@ -139,7 +139,7 @@ public class EduTeacherController {
     }
 
     @ApiOperation("根据 id 查询讲师")
-    @GetMapping("/getTeacherById/{id}")
+    @GetMapping("/getTeacherInfoById/{id}")
     public R getTeacherById(@ApiParam(name = "id", value = "讲师 id", required = true) @PathVariable String id) {
         EduTeacher eduTeacher = eduTeacherService.getById(id);
 
@@ -153,7 +153,6 @@ public class EduTeacherController {
     @ApiOperation("修改讲师")
     @PostMapping("/editTeacher")
     public R editTeacher(@ApiParam(name = "eduTeacher", value = "讲师对象", required = true) @RequestBody EduTeacher eduTeacher) {
-        System.out.println(eduTeacher);
         // 调用接口, 修改讲师
         boolean result = eduTeacherService.updateById(eduTeacher);
         // 判断
