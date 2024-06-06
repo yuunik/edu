@@ -146,13 +146,13 @@ public class EduTeacherController {
         if (eduTeacher == null) {
             return R.error();
         } else {
-            return R.ok().data("eduTeacher", eduTeacher);
+            return R.ok().data("teacher", eduTeacher);
         }
     }
 
     @ApiOperation("修改讲师")
-    @PostMapping("/editTeacher")
-    public R editTeacher(@ApiParam(name = "eduTeacher", value = "讲师对象", required = true) @RequestBody EduTeacher eduTeacher) {
+    @PostMapping("/updateTeacherInfoById")
+    public R updateTeacherInfoById(@ApiParam(name = "eduTeacher", value = "讲师对象", required = true) @RequestBody EduTeacher eduTeacher) {
         // 调用接口, 修改讲师
         boolean result = eduTeacherService.updateById(eduTeacher);
         // 判断
