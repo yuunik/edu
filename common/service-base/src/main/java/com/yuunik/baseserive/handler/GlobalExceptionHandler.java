@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 /**
  * 异常处理类
  */
@@ -56,5 +58,19 @@ public class GlobalExceptionHandler {
         // 输出至后台
         error.printStackTrace();
         return R.error().code(error.getCode()).message(error.getMsg());
+    }
+
+    /**
+     * 讲师表单姓名重复错误捕获
+     */
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    @ResponseBody
+    public R sqlIntegrityConstraintViolationExceptionHandler(SQLIntegrityConstraintViolationException error) {
+        // 输出至日志文件
+        log.error("讲师表单姓名重复错误捕获: " + error.getMessage());
+        // 输出至后台
+        error.printStackTrace();
+
+        return R.error().message("讲师姓名重复, 请重新输入");
     }
 }
