@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,5 +161,16 @@ public class EduTeacherController {
             return R.error();
         }
     }
+
+    @ApiOperation("下载新增讲师文件模板")
+    @GetMapping("/exportTemplate")
+    public void exportTemplate(HttpServletResponse response) {
+        try {
+            eduTeacherService.exportTemplate(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

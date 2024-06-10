@@ -3,6 +3,8 @@ package com.yuunik.eduservice.service;
 import com.yuunik.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <p>
  * 讲师 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduTeacherService extends IService<EduTeacher> {
 
+    void exportTemplate(HttpServletResponse response);
 }
