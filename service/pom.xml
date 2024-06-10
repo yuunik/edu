@@ -10,10 +10,12 @@
     </parent>
 
     <!-- 模块信息 -->
+    <groupId>com.yuunik</groupId>
     <artifactId>service</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>service-edu</module>
+        <module>service-oss</module>
     </modules>
     <version>1.0.0</version>
     <name>service</name>

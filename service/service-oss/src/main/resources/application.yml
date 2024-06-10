@@ -1,0 +1,24 @@
+server:
+  # 服务端口号
+  port: 8002
+
+spring:
+  application:
+    # 服务名
+    name: service-oss
+  profiles:
+    # 环境设置: dev, test, prod
+    active: dev
+
+# 阿里云 oss 配置
+aliyun:
+  oss:
+    file:
+      # 地域节点
+      endpoint: oss-cn-beijing.aliyuncs.com
+      # 访问密钥id
+      access-key-id: LTAI5tBgjLQ7v7eX9vhLdaYR
+      # 访问密钥
+      access-key-secret: WbC7aXsRYMGnr02Z3gQiRPWubo1PCU
+      # bucket 名称
+      bucket-name: edu-yuunik
