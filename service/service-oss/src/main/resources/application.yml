@@ -15,10 +15,10 @@ aliyun:
   oss:
     file:
       # 地域节点
-      endpoint: oss-cn-beijing.aliyuncs.com
+      endpoint: # 请填写你自己的地域节点
       # 访问密钥id
-      access-key-id: LTAI5tBgjLQ7v7eX9vhLdaYR
+      access-key-id: # 请填写你自己的访问密钥id
       # 访问密钥
-      access-key-secret: WbC7aXsRYMGnr02Z3gQiRPWubo1PCU
+      access-key-secret: # 请填写你自己的访问密钥
       # bucket 名称
-      bucket-name: edu-yuunik
+      bucket-name: # 请填写你自己的bucket名称
