@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -169,6 +170,19 @@ public class EduTeacherController {
             eduTeacherService.exportTemplate(response);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @ApiOperation("批量导入讲师")
+    @PostMapping("/importData")
+    public R importTeacherData(MultipartFile file) {
+        try {
+            eduTeacherService.importTeacherData(file, eduTeacherService);
+            return R.ok();
+        } catch (Exception e) {
+            // 输出异常
+            e.printStackTrace();
+            return R.error();
         }
     }
 
