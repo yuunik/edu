@@ -18,7 +18,7 @@ public class EduLoginController {
     @PostMapping("/login")
     public R login(@ApiParam(name = "username", value = "用户名", required = true) @RequestBody LoginForm loginForm) {
         System.out.println("loginForm = " + loginForm);
-        return R.ok().data("token", "this is my first token.take it away");
+        return R.ok().data("token1111", "this is my first token.take it away");
     }
 
     @ApiOperation("获取用户信息")
