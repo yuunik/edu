@@ -13,7 +13,7 @@
 
     <!-- 项目信息 -->
     <groupId>com.yuunik</groupId>
-    <artifactId>edu-back-end</artifactId>
+    <artifactId>edu</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>service</module>
