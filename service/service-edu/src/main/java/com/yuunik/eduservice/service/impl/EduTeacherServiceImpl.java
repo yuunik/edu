@@ -68,7 +68,6 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
 
             // 导出模板
             EasyExcel.write(response.getOutputStream(), EduTeacher.class).registerWriteHandler(horizontalCellStyleStrategy).sheet("新增列表").doWrite(eduTeacherList);
-
         } catch (Exception e) {
             // 输出异常
             e.printStackTrace();
