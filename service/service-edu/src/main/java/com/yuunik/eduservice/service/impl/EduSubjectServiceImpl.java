@@ -6,13 +6,16 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.yuunik.eduservice.entity.EduSubject;
 import com.yuunik.eduservice.entity.excel.Subject;
+import com.yuunik.eduservice.lisntener.SubjectExcelListener;
 import com.yuunik.eduservice.mapper.EduSubjectMapper;
 import com.yuunik.eduservice.service.EduSubjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,6 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
 
             // 设置样式相关
-
             // 设置表头样式
             WriteCellStyle headWriteCellStyle = new WriteCellStyle();
             // 设置表头字体样式
@@ -73,5 +75,19 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         }
 
 
+    }
+
+    // 导入课程分类文件
+    @Override
+    public void importSubjectData(MultipartFile file, EduSubjectService eduSubjectService) {
+        try {
+            // 获取文件输入流
+            InputStream inputStream = file.getInputStream();
+            // 读取文件
+            EasyExcel.read(inputStream, Subject.class, new SubjectExcelListener(eduSubjectService)).sheet().doRead();
+        } catch (Exception e) {
+            // 输出异常
+            e.printStackTrace();
+        }
     }
 }

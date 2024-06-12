@@ -6,7 +6,7 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.yuunik.eduservice.entity.EduTeacher;
 import com.yuunik.eduservice.entity.excel.Teacher;
-import com.yuunik.eduservice.lisntener.ExcelListener;
+import com.yuunik.eduservice.lisntener.TeacherExcelListener;
 import com.yuunik.eduservice.mapper.EduTeacherMapper;
 import com.yuunik.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
             // 读取文件输入流
             InputStream inputStream = file.getInputStream();
             // 读取文件
-            EasyExcel.read(inputStream, Teacher.class, new ExcelListener(eduTeacherService)).sheet().doRead();
+            EasyExcel.read(inputStream, Teacher.class, new TeacherExcelListener(eduTeacherService)).sheet().doRead();
         } catch (Exception e) {
             // 输出异常
             e.printStackTrace();

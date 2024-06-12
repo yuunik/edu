@@ -9,19 +9,19 @@ import com.yuunik.eduservice.service.EduTeacherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ExcelListener extends AnalysisEventListener<Teacher> {
-    private static final Logger log = LoggerFactory.getLogger(ExcelListener.class);
+public class TeacherExcelListener extends AnalysisEventListener<Teacher> {
+    private static final Logger log = LoggerFactory.getLogger(TeacherExcelListener.class);
     private EduTeacherService eduTeacherService;
 
     // 有参构造器
-    public ExcelListener(EduTeacherService eduTeacherService) {
+    public TeacherExcelListener(EduTeacherService eduTeacherService) {
         this.eduTeacherService = eduTeacherService;
     }
 
     // 读取数据
     @Override
     public void invoke(Teacher teacher, AnalysisContext analysisContext) {
-        System.out.println("读取到数据：" + teacher);
+        // 非空判断
         if (teacher == null) {
             // 抛出异常
             throw new YuunikException(20001, "数据不能为空");

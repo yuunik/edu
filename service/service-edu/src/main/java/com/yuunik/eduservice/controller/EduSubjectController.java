@@ -3,13 +3,12 @@ package com.yuunik.eduservice.controller;
 
 import com.yuunik.eduservice.service.EduSubjectService;
 import com.yuunik.utilscommon.R;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author yuunik
  * @since 2024-06-12
  */
+@Api(description = "课程管理接口")
 @RestController
 @RequestMapping("/eduservice/subject")
 @CrossOrigin
@@ -36,6 +36,20 @@ public class EduSubjectController {
         } catch (Exception e) {
             // 输出异常
             e.printStackTrace();
+        }
+    }
+
+    @ApiOperation("导入课程分类文件")
+    @PostMapping("/import")
+    public R importSubjectData(@ApiParam(name = "file", value = "课程分类文件", required = true)MultipartFile file) {
+        try {
+            // 调用接口, 导入课程分类文件
+            eduSubjectService.importSubjectData(file, eduSubjectService);
+            return R.ok();
+        } catch (Exception e) {
+            // 输出异常
+            e.printStackTrace();
+            return R.error().message("导入课程分类模板失败");
         }
     }
 

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 // 设置导出模板的表头行高
-@HeadRowHeight(25)
+@HeadRowHeight(20)
 // 设置导出模板的列宽
 @ColumnWidth(20)
 public class Subject {
