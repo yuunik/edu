@@ -1,6 +1,7 @@
 package com.yuunik.eduservice.controller;
 
 
+import com.yuunik.eduservice.entity.subject.OneSubject;
 import com.yuunik.eduservice.service.EduSubjectService;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <p>
@@ -51,6 +53,13 @@ public class EduSubjectController {
             e.printStackTrace();
             return R.error().message("导入课程分类模板失败");
         }
+    }
+
+    @ApiOperation("获取课程分类列表")
+    @GetMapping("/getSubjectList")
+    public R getSubjectData() {
+        List<OneSubject> oneSubjectList = eduSubjectService.getSubjectData();
+        return R.ok().data("subjectList", oneSubjectList);
     }
 
 }

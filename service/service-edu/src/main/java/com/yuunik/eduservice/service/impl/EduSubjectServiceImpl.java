@@ -4,8 +4,11 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yuunik.eduservice.entity.EduSubject;
 import com.yuunik.eduservice.entity.excel.Subject;
+import com.yuunik.eduservice.entity.subject.OneSubject;
+import com.yuunik.eduservice.entity.subject.TwoSubject;
 import com.yuunik.eduservice.lisntener.SubjectExcelListener;
 import com.yuunik.eduservice.mapper.EduSubjectMapper;
 import com.yuunik.eduservice.service.EduSubjectService;
@@ -89,5 +92,53 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             // 输出异常
             e.printStackTrace();
         }
+    }
+
+    // 获取课程管理列表
+    @Override
+    public List<OneSubject> getSubjectData() {
+        // 获取一级分类列表
+        // 条件查询
+        QueryWrapper<EduSubject> oneSubjectQueryWrapper = new QueryWrapper<>();
+        oneSubjectQueryWrapper.eq("parent_id", "0");
+        List<EduSubject> oneSubjectList = baseMapper.selectList(oneSubjectQueryWrapper);
+
+        // 获取二级分类
+        QueryWrapper<EduSubject> twoSubjectQueryWrapper = new QueryWrapper<>();
+        twoSubjectQueryWrapper.ne("parent_id", "0");
+        List<EduSubject> twoEduSubjectList = this.list(twoSubjectQueryWrapper);
+
+        // 返回数据
+        List<OneSubject> resultSubjectList = new ArrayList<>();
+        // 一级分类
+        OneSubject oneSubject = null;
+        // 二级分类
+        TwoSubject twoSubject = null;
+        for (EduSubject oneEduSubject: oneSubjectList) {
+            // 封装一级分类
+            oneSubject = new OneSubject();
+            oneSubject.setKey(oneEduSubject.getId());
+            oneSubject.setTitle(oneEduSubject.getTitle());
+
+            // 二级分类集合
+            List<TwoSubject> twoSubjectList = new ArrayList<>();
+            for (EduSubject twoEduSubject: twoEduSubjectList) {
+                // 判断二级分类id是否等于一级分类id
+                if (twoEduSubject.getParentId().equals(oneEduSubject.getId())) {
+                    // 封装二级分类
+                    twoSubject = new TwoSubject();
+                    twoSubject.setKey(twoEduSubject.getId());
+                    twoSubject.setTitle(twoEduSubject.getTitle());
+                    // 封装二级分类集合
+                    twoSubjectList.add(twoSubject);
+                }
+            }
+            // 添加一级分类的子集合
+            oneSubject.setChildren(twoSubjectList);
+            // 添加一级分类
+            resultSubjectList.add(oneSubject);
+        }
+        // 返回数据
+        return resultSubjectList;
     }
 }
