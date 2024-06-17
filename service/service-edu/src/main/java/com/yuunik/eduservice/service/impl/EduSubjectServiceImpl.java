@@ -5,16 +5,20 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduSubject;
 import com.yuunik.eduservice.entity.excel.Subject;
 import com.yuunik.eduservice.entity.subject.OneSubject;
 import com.yuunik.eduservice.entity.subject.TwoSubject;
+import com.yuunik.eduservice.entity.vo.SubjectInfo;
 import com.yuunik.eduservice.lisntener.SubjectExcelListener;
 import com.yuunik.eduservice.mapper.EduSubjectMapper;
 import com.yuunik.eduservice.service.EduSubjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -140,5 +144,37 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         }
         // 返回数据
         return resultSubjectList;
+    }
+
+    // 添加课程分类信息
+    @Override
+    public void addSubject(SubjectInfo subjectInfo) {
+        // 获取分类信息
+        String oneSubject = subjectInfo.getOneSubject();
+        String twoSubject = subjectInfo.getTwoSubject();
+        // 非空判断
+        if (StringUtils.isEmpty(oneSubject)) {
+            throw new YuunikException(20001, "一级分类不能为空");
+        }
+        // 添加一级分类
+        EduSubject oneEduSubject = new EduSubject();
+        oneEduSubject.setTitle(oneSubject);
+        oneEduSubject.setParentId("0");
+        this.save(oneEduSubject);
+        // 若二级分类存在， 则添加二级分类
+        if (!Strings.isEmpty(twoSubject)) {
+            EduSubject twoEduSubject = new EduSubject();
+            twoEduSubject.setTitle(twoSubject);
+            // 获取本次一级分类id
+            QueryWrapper<EduSubject> eduSubjectQueryWrapper = new QueryWrapper<>();
+            eduSubjectQueryWrapper.eq("title", oneSubject);
+            eduSubjectQueryWrapper.eq("parent_id", "0");
+            // 获取一级分类id
+            EduSubject resultEduSubject = baseMapper.selectOne(eduSubjectQueryWrapper);
+            // 设置二级分类id
+            twoEduSubject.setParentId(resultEduSubject.getId());
+            // 添加二级分类
+            baseMapper.insert(twoEduSubject);
+        }
     }
 }

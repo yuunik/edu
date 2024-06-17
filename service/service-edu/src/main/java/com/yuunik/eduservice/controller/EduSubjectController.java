@@ -2,6 +2,7 @@ package com.yuunik.eduservice.controller;
 
 
 import com.yuunik.eduservice.entity.subject.OneSubject;
+import com.yuunik.eduservice.entity.vo.SubjectInfo;
 import com.yuunik.eduservice.service.EduSubjectService;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
@@ -60,6 +61,13 @@ public class EduSubjectController {
     public R getSubjectData() {
         List<OneSubject> oneSubjectList = eduSubjectService.getSubjectData();
         return R.ok().data("subjectList", oneSubjectList);
+    }
+
+    @ApiOperation("添加课程分类信息")
+    @PostMapping("/addSubject")
+    public R addSubject(@ApiParam(name = "oneSubject", value = "一级课程分类", required = true) @RequestBody SubjectInfo subjectInfo) {
+        eduSubjectService.addSubject(subjectInfo);
+        return R.ok();
     }
 
 }
