@@ -11,9 +11,9 @@ spring:
   # mysql 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yuunik?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://www.edu.com:3306/yuunik?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: Chow.1997
   # json
   jackson:
     # 返回 json 的全局时间格式
