@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value = "二级分类对象", description = "课程管理对象")
+@ApiModel(value = "二级分类对象", description = "课程分类管理对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

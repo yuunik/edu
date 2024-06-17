@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@ApiModel(value = "一级分类对象", description = "课程管理对象")
+@ApiModel(value = "一级分类对象", description = "课程分类管理对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

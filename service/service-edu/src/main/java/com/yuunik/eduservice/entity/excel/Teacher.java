@@ -1,9 +1,11 @@
 package com.yuunik.eduservice.entity.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+@ApiModel(value = "新增讲师文件模板", description = "新增讲师文件模板")
 @Data
 public class Teacher {
     @ApiModelProperty(value = "讲师姓名")

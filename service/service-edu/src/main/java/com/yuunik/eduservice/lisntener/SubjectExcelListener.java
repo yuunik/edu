@@ -25,20 +25,20 @@ public class SubjectExcelListener extends AnalysisEventListener<Subject> {
             throw new YuunikException(20001, "文件数据为空");
         }
         // 查询一级分类是否存在
-        EduSubject firstLevelSubject = existFirstLevelSubject(subject.getFirstSubject());
+        EduSubject firstLevelSubject = existFirstLevelSubject(subject.getOneSubject());
         // 若不存在
         if (firstLevelSubject == null) {
             firstLevelSubject = new EduSubject();
-            firstLevelSubject.setTitle(subject.getFirstSubject());
+            firstLevelSubject.setTitle(subject.getOneSubject());
             firstLevelSubject.setId("0");
             // 添加一级分类信息
             eduSubjectService.save(firstLevelSubject);
         }
         // 查询二级分类是否存在
-        EduSubject secondLevelSubject = existSecondLevelSubject(subject.getSecondSubject(), firstLevelSubject.getId());
+        EduSubject secondLevelSubject = existSecondLevelSubject(subject.getTwoSubject(), firstLevelSubject.getId());
         if (secondLevelSubject == null) {
             secondLevelSubject = new EduSubject();
-            secondLevelSubject.setTitle(subject.getSecondSubject());
+            secondLevelSubject.setTitle(subject.getTwoSubject());
             secondLevelSubject.setParentId(firstLevelSubject.getId());
             // 添加二级分类信息
             eduSubjectService.save(secondLevelSubject);

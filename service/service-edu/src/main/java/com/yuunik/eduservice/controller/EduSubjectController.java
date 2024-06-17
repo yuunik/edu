@@ -23,7 +23,7 @@ import java.util.List;
  * @author yuunik
  * @since 2024-06-12
  */
-@Api(description = "课程管理接口")
+@Api(description = "课程分类管理接口")
 @RestController
 @RequestMapping("/eduservice/subject")
 @CrossOrigin
