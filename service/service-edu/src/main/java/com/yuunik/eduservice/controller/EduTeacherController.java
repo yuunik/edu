@@ -44,7 +44,7 @@ public class EduTeacherController {
     @GetMapping("/getTeacherInfoList")
     public R getTeacherInfoList() {
         List<EduTeacher> teacherList = eduTeacherService.list(null);
-        return R.ok().data("teachList", teacherList);
+        return R.ok().data("teacherList", teacherList);
     }
 
     // 根据 id 删除讲师
