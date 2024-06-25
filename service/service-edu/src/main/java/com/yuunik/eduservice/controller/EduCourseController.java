@@ -30,8 +30,8 @@ public class EduCourseController {
     @PostMapping("/addCourseInfo")
     public R addCourseInfo(@ApiParam(name = "courseInfoVO", value = "课程基本信息", required = true) @RequestBody CourseInfoVO courseInfoVO) {
         // 调用接口, 新增课程基本信息
-        eduCourseService.saveCourseInfo(courseInfoVO);
-        return R.ok();
+        String id = eduCourseService.saveCourseInfo(courseInfoVO);
+        return R.ok().data("courseId", id);
     }
 
 }

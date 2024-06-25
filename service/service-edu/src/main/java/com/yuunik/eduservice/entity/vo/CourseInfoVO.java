@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @ApiModel(value = "课程基本信息对象", description = "课程管理介绍")
@@ -30,7 +31,7 @@ public class CourseInfoVO implements Serializable {
     private String title;
 
     @ApiModelProperty("课程价格")
-    private Integer price;
+    private BigDecimal price;
 
     @ApiModelProperty("课程总课时")
     private Integer lessonNum;
@@ -39,10 +40,10 @@ public class CourseInfoVO implements Serializable {
     private String cover;
 
     @ApiModelProperty("购买人数")
-    private Integer buyCount;
+    private Long buyCount;
 
     @ApiModelProperty("课程观看人数")
-    private Integer viewCount;
+    private Long viewCount;
 
     @ApiModelProperty("课程简介")
     private String description;
