@@ -1,5 +1,6 @@
 package com.yuunik.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
@@ -46,5 +47,57 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         // 返回课程 id
         return eduCourse.getId();
+    }
+
+    // 根据课程 id 查询课程基本信息
+    @Override
+    public CourseInfoVO selectCourseInfo(String courseId) {
+        // 响应数据
+        CourseInfoVO courseInfoVO = new CourseInfoVO();
+        // 调用接口, 获取课程信息
+        EduCourse eduCourse = this.getById(courseId);
+        if (eduCourse == null) {
+            throw new YuunikException(20001, "不存在该课程");
+        }
+        BeanUtils.copyProperties(eduCourse, courseInfoVO);
+        // 调用接口, 获取课程简介信息
+        QueryWrapper<EduCourseDescription> eduCourseDescriptionQueryWrapper = new QueryWrapper<>();
+        eduCourseDescriptionQueryWrapper.eq("id", courseId);
+
+        EduCourseDescription eduCourseDescription = eduCourseDescriptionService.getOne(eduCourseDescriptionQueryWrapper);
+        if (eduCourseDescription == null) {
+            throw new YuunikException(20001, "不存在该课程简介");
+        }
+        // 设置课程简介信息
+        courseInfoVO.setDescription(eduCourseDescription.getDescription());
+
+        return courseInfoVO;
+    }
+
+    // 修改课程信息
+    @Override
+    public void updateCourseInfo(CourseInfoVO courseInfoVO) {
+        // 课程信息
+        EduCourse eduCourse = new EduCourse();
+        // 课程简介信息
+        EduCourseDescription eduCourseDescription = new EduCourseDescription();
+        // 获取课程信息
+        BeanUtils.copyProperties(courseInfoVO, eduCourse);
+        // 调用接口, 修改课程信息
+        boolean isUpdateCourse = this.updateById(eduCourse);
+        if (!isUpdateCourse) {
+            // 抛出错误
+            throw new YuunikException(20001, "修改课程信息错误");
+        }
+        // 获取课程信息
+        QueryWrapper<EduCourseDescription> eduCourseDescriptionQueryWrapper = new QueryWrapper<>();
+        eduCourseDescriptionQueryWrapper.eq("id", courseInfoVO.getId());
+        eduCourseDescription.setDescription(courseInfoVO.getDescription());
+        // 修改课程简介信息
+        boolean isUpdateDescription = eduCourseDescriptionService.update(eduCourseDescription, eduCourseDescriptionQueryWrapper);
+        if (!isUpdateDescription) {
+            // 抛出错误
+            throw new YuunikException(20001, "修改课程简介信息错误");
+        }
     }
 }

@@ -34,5 +34,18 @@ public class EduCourseController {
         return R.ok().data("courseId", id);
     }
 
+    @ApiOperation("获取课程详情")
+    @GetMapping("/getCourseInfo/{courseId}")
+    public R getCourseInfo(@PathVariable String courseId){
+        CourseInfoVO courseInfoVO = eduCourseService.selectCourseInfo(courseId);
+        return R.ok().data("courseInfo", courseInfoVO);
+    }
+
+    @ApiOperation("修改课程信息")
+    @PostMapping("/editCourseInfo")
+    public R editCourseInfo(@ApiParam(name = "courseInfo", value = "课程信息", required = true)@RequestBody CourseInfoVO courseInfoVO) {
+        eduCourseService.updateCourseInfo(courseInfoVO);
+        return R.ok();
+    }
 }
 

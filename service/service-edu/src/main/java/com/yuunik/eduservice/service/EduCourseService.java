@@ -15,4 +15,8 @@ import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 public interface EduCourseService extends IService<EduCourse> {
 
     String saveCourseInfo(CourseInfoVO courseInfoVO);
+
+    CourseInfoVO selectCourseInfo(String courseId);
+
+    void updateCourseInfo(CourseInfoVO courseInfoVO);
 }

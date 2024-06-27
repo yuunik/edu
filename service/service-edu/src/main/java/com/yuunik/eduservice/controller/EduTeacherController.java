@@ -174,7 +174,7 @@ public class EduTeacherController {
     }
 
     @ApiOperation("批量导入讲师")
-    @PostMapping("/importData")
+    @PostMapping("/import")
     public R importTeacherData(MultipartFile file) {
         try {
             eduTeacherService.importTeacherData(file, eduTeacherService);
