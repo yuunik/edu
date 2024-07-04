@@ -1,6 +1,7 @@
 package com.yuunik.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduChapter;
 import com.yuunik.eduservice.entity.EduVideo;
 import com.yuunik.eduservice.entity.chapter.ChapterVo;
@@ -81,5 +82,22 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
 
         return chapterVoList;
+    }
+
+    // 删除课程章节
+    @Override
+    public boolean removeChapter(String id) {
+        // 查询条件
+        QueryWrapper<EduVideo> eduVideoQueryWrapper = new QueryWrapper<>();
+        eduVideoQueryWrapper.eq("chapter_id", id);
+        int count = eduVideoService.count(eduVideoQueryWrapper);
+        if (count != 0 ) {
+            // 删除的课程章节下存在小节, 不允许删除
+            throw new YuunikException(20001, "只能删除没有小节的课程章节");
+        }
+        // 调用接口, 删除课程章节
+        int result = baseMapper.deleteById(id);
+        // 根据删除的结果, 返回成功或失败的响应
+        return result > 0;
     }
 }
