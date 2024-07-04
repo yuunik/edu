@@ -56,7 +56,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         for (EduChapter eduChapter: eduChapterList) {
             // 创建章节对象
             chapterVo = new ChapterVo();
-            BeanUtils.copyProperties(eduChapter, chapterVo);
+            chapterVo.setKey(eduChapter.getId());
+            chapterVo.setTitle(eduChapter.getTitle());
+            // BeanUtils.copyProperties(eduChapter, chapterVo);
 
             videoVoList = new ArrayList<>();
             // 遍历课程小节列表
@@ -66,7 +68,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                 // 判断小节所属的章节
                 if (eduVideo.getChapterId().equals(eduChapter.getId())) {
                     // 封装 videoVo
-                    BeanUtils.copyProperties(eduVideo, videoVo);
+                    videoVo.setKey(eduVideo.getId());
+                    videoVo.setTitle(eduVideo.getTitle());
+                    // BeanUtils.copyProperties(eduVideo, videoVo);
                     // 封装课程小节列表
                     videoVoList.add(videoVo);
                 }

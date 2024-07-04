@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class ChapterVo {
     @ApiModelProperty(value = "课程章节 id", required = true)
-    private String id;
+    private String key;
 
     @ApiModelProperty(value = "课程章节标题", required = true)
     private String title;

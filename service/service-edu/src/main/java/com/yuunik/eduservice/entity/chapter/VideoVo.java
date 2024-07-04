@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class VideoVo {
     @ApiModelProperty(value = "课程小节 id", required = true)
-    private String id;
+    private String key;
 
     @ApiModelProperty(value = "课程小节标题", required = true)
     private String title;
