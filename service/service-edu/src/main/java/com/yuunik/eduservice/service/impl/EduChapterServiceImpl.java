@@ -37,6 +37,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         // 调用接口, 获取课程章节列表
         QueryWrapper<EduChapter> eduChapterQueryWrapper = new QueryWrapper<>();
         eduChapterQueryWrapper.eq("course_id", courseId);
+        eduChapterQueryWrapper.orderByAsc("sort");
         List<EduChapter> eduChapterList = baseMapper.selectList(eduChapterQueryWrapper);
 
         // 调用接口, 获取课程小节列表
