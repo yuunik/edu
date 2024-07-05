@@ -43,6 +43,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         // 调用接口, 获取课程小节列表
         QueryWrapper<EduVideo> eduVideoQueryWrapper = new QueryWrapper<>();
         eduVideoQueryWrapper.eq("course_id", courseId);
+        eduVideoQueryWrapper.orderByAsc("sort");
         List<EduVideo> eduVideoList = eduVideoService.list(eduVideoQueryWrapper);
 
         // 返回的响应数据
