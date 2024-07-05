@@ -26,6 +26,8 @@ mybatis-plus:
   configuration:
     # 输出日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 配置mapper xml文件的路径
+  mapper-locations: classpath:com/yuunik/eduservice/mapper/xml/*.xml
 # 设置日志级别
 #  logging:
 #    level:

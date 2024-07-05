@@ -125,4 +125,16 @@
             <version>2.1.1</version>
         </dependency>
     </dependencies>
+
+    <!-- 扫描 mapper 包的 xml 文件 -->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

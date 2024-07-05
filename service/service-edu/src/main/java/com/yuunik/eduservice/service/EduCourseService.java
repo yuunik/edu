@@ -3,6 +3,7 @@ package com.yuunik.eduservice.service;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
+import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -19,4 +20,6 @@ public interface EduCourseService extends IService<EduCourse> {
     CourseInfoVO selectCourseInfo(String courseId);
 
     void updateCourseInfo(CourseInfoVO courseInfoVO);
+
+    CoursePublishVo getCoursePublishInfo(String id);
 }

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuunik.eduservice.mapper.EduCourseMapper">
+    <!-- 获取发布课程的信息 -->
+    <select id="selectCoursePublishInfo" resultType="com.yuunik.eduservice.entity.vo.CoursePublishVo">
+        select ec.id,
+               ec.title,
+               ec.cover,
+               ec.lesson_num as lessonNum,
+               ecd.description,
+               es.title   as oneSubject,
+               es_2.title as twoSubject,
+               et.name    as teacherName,
+               ec.price
+        from edu_course ec
+                 left outer join
+             edu_course_description ecd
+             on ec.id = ecd.id
+                 left outer join
+             edu_subject es
+             on ec.subject_parent_id = es.id
+                 left outer join
+             edu_subject es_2
+             on ec.subject_id = es_2.id
+                 left outer join
+             edu_teacher et
+             on ec.teacher_id = et.id
+        where ec.id = #{id}
+    </select>
 
 </mapper>

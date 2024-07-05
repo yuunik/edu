@@ -5,6 +5,7 @@ import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
+import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.mapper.EduCourseMapper;
 import com.yuunik.eduservice.service.EduCourseDescriptionService;
 import com.yuunik.eduservice.service.EduCourseService;
@@ -99,5 +100,14 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             // 抛出错误
             throw new YuunikException(20001, "修改课程简介信息错误");
         }
+    }
+
+    // 根据课程 id 查询课程发布信息
+    @Override
+    public CoursePublishVo getCoursePublishInfo(String id) {
+        CoursePublishVo coursePublishVo = baseMapper.selectCoursePublishInfo(id);
+        System.out.println(coursePublishVo);
+        System.out.println("pause");
+        return baseMapper.selectCoursePublishInfo(id);
     }
 }

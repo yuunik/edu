@@ -2,6 +2,7 @@ package com.yuunik.eduservice.mapper;
 
 import com.yuunik.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2024-06-17
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
-
+    // 获取课程发布信息
+    CoursePublishVo selectCoursePublishInfo(String id);
 }

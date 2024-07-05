@@ -2,6 +2,7 @@ package com.yuunik.eduservice.controller;
 
 
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
+import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.service.EduCourseService;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
@@ -46,6 +47,13 @@ public class EduCourseController {
     public R editCourseInfo(@ApiParam(name = "courseInfo", value = "课程信息", required = true)@RequestBody CourseInfoVO courseInfoVO) {
         eduCourseService.updateCourseInfo(courseInfoVO);
         return R.ok();
+    }
+
+    @ApiOperation("获取发布课程的详情")
+    @GetMapping("/getCoursePublishInfo/{id}")
+    public R getCoursePublishInfo(@ApiParam(name = "id", value = "课程 id", required = true) @PathVariable String id) {
+        CoursePublishVo coursePublishInfo = eduCourseService.getCoursePublishInfo(id);
+        return R.ok().data("coursePublishInfo", coursePublishInfo);
     }
 }
 
