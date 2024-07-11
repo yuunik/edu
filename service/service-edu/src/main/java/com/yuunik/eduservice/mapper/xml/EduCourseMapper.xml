@@ -11,6 +11,8 @@
                es.title   as oneSubject,
                es_2.title as twoSubject,
                et.name    as teacherName,
+               et.avatar  as teacherAvatar,
+               et.intro   as teacherIntro,
                ec.price
         from edu_course ec
                  left outer join

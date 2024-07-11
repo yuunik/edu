@@ -55,5 +55,12 @@ public class EduCourseController {
         CoursePublishVo coursePublishInfo = eduCourseService.getCoursePublishInfo(id);
         return R.ok().data("coursePublishInfo", coursePublishInfo);
     }
+
+    @ApiOperation("发布课程")
+    @PutMapping("/publishCourse/{id}")
+    public R publishCourse(@ApiParam(name = "id", value = "课程 id", required = true) @PathVariable String id) {
+        boolean result = eduCourseService.publishCourse(id);
+        return result ? R.ok() : R.error();
+    }
 }
 

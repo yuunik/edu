@@ -19,6 +19,9 @@ public class CoursePublishVo {
     @ApiModelProperty(value = "发布课程的总课时数")
     private Integer lessonNum;
 
+    @ApiModelProperty(value = "发布课程的简介")
+    private String description;
+
     @ApiModelProperty(value = "发布课程的一级分类")
     private String oneSubject;
 
@@ -27,6 +30,12 @@ public class CoursePublishVo {
 
     @ApiModelProperty(value = "讲师姓名")
     private String teacherName;
+
+    @ApiModelProperty(value = "讲师头像")
+    private String teacherAvatar;
+
+    @ApiModelProperty(value = "讲师简介")
+    private String teacherIntro;
 
     @ApiModelProperty(value = "发布课程的售价")
     private String price;

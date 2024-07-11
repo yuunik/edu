@@ -110,4 +110,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         System.out.println("pause");
         return baseMapper.selectCoursePublishInfo(id);
     }
+
+    // 发布课程
+    @Override
+    public boolean publishCourse(String id) {
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        eduCourse.setStatus("Normal");
+        boolean isUpdate = this.updateById(eduCourse);
+        if (isUpdate) {
+            return true;
+        }
+        return false;
+    }
 }
