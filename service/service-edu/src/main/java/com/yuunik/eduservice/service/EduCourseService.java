@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务类
@@ -24,4 +26,6 @@ public interface EduCourseService extends IService<EduCourse> {
     CoursePublishVo getCoursePublishInfo(String id);
 
     boolean publishCourse(String id);
+
+    List<EduCourse> getCourseList();
 }

@@ -14,6 +14,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务实现类
@@ -122,5 +125,20 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             return true;
         }
         return false;
+    }
+
+    // 获取课程列表
+    @Override
+    public List<EduCourse> getCourseList() {
+        // 构造条件
+        QueryWrapper<EduCourse> eduCourseQueryWrapper = new QueryWrapper<>();
+        // 按创建时间降序排列
+        eduCourseQueryWrapper.orderByDesc("gmt_create");
+        List<EduCourse> courseList = this.list(eduCourseQueryWrapper);
+        if (courseList == null) {
+            // 抛出异常
+            throw new YuunikException(20001, "获取课程列表失败");
+        }
+        return courseList;
     }
 }

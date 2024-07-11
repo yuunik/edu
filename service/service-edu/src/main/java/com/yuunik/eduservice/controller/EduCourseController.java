@@ -1,6 +1,7 @@
 package com.yuunik.eduservice.controller;
 
 
+import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.service.EduCourseService;
@@ -10,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -61,6 +64,13 @@ public class EduCourseController {
     public R publishCourse(@ApiParam(name = "id", value = "课程 id", required = true) @PathVariable String id) {
         boolean result = eduCourseService.publishCourse(id);
         return result ? R.ok() : R.error();
+    }
+
+    @ApiOperation("获取课程列表")
+    @GetMapping("/getCourseList")
+    public R getCourseList() {
+        List<EduCourse> courseList = eduCourseService.getCourseList();
+        return R.ok().data("courseList", courseList);
     }
 }
 
