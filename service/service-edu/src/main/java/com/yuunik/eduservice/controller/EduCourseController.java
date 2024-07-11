@@ -1,9 +1,9 @@
 package com.yuunik.eduservice.controller;
 
 
-import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
+import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.eduservice.service.EduCourseService;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,11 +66,15 @@ public class EduCourseController {
         return result ? R.ok() : R.error();
     }
 
-    @ApiOperation("获取课程列表")
-    @GetMapping("/getCourseList")
-    public R getCourseList() {
-        List<EduCourse> courseList = eduCourseService.getCourseList();
-        return R.ok().data("courseList", courseList);
+    @ApiOperation("分页查询课程列表")
+    @PostMapping("/pageCourseList/{current}/{pageSize}")
+    public R pageCourseList(@ApiParam(name = "current", value = "当前页", required = true) @PathVariable long current,
+                            @ApiParam(name = "pageSize", value = "每页记录条数", required = true) @PathVariable long pageSize,
+                            @ApiParam(name = "courseQueryVo", value = "查询条件", required = true) @RequestBody CourseQueryVo courseQueryVo) {
+        Map<String, Object> eduCoursePageInfo = eduCourseService.pageCourseList(current, pageSize, courseQueryVo);
+        return R.ok().data(eduCoursePageInfo);
     }
+
+
 }
 

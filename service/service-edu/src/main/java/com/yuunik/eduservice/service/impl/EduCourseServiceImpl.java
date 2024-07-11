@@ -1,11 +1,14 @@
 package com.yuunik.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
+import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.eduservice.mapper.EduCourseMapper;
 import com.yuunik.eduservice.service.EduCourseDescriptionService;
 import com.yuunik.eduservice.service.EduCourseService;
@@ -13,9 +16,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -129,16 +134,43 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     // 获取课程列表
     @Override
-    public List<EduCourse> getCourseList() {
+    public Map<String, Object> pageCourseList(long current, long pageSize, CourseQueryVo courseQueryVo) {
         // 构造条件
         QueryWrapper<EduCourse> eduCourseQueryWrapper = new QueryWrapper<>();
+        // 获取查询条件
+        String title = courseQueryVo.getTitle();
+        String status = courseQueryVo.getStatus();
+        // 非空判断
+        if (!StringUtils.isEmpty(title)) {
+            eduCourseQueryWrapper.like("title", title);
+        }
+        if (!StringUtils.isEmpty(status)) {
+            eduCourseQueryWrapper.eq("status", status);
+        }
+        // 分页条件
+        Page<EduCourse> eduCoursePage = new Page<>(current, pageSize);
         // 按创建时间降序排列
         eduCourseQueryWrapper.orderByDesc("gmt_create");
-        List<EduCourse> courseList = this.list(eduCourseQueryWrapper);
+        // 调用接口，获取课程列表
+        IPage<EduCourse> pageResult = this.page(eduCoursePage, eduCourseQueryWrapper);
+        // 获取课程列表
+        List<EduCourse> courseList = pageResult.getRecords();
+        // 获取当前页
+        long resultCurrent = pageResult.getCurrent();
+        // 获取每页记录数
+        long resultSize = pageResult.getSize();
+        // 获取总页数
+        long resultTotal = pageResult.getTotal();
         if (courseList == null) {
             // 抛出异常
             throw new YuunikException(20001, "获取课程列表失败");
         }
-        return courseList;
+        // 根据响应, 封装响应数据
+        Map<String, Object> eduCoursePageResult = new HashMap<>();
+        eduCoursePageResult.put("current", resultCurrent);
+        eduCoursePageResult.put("pageSize", resultSize);
+        eduCoursePageResult.put("total", resultTotal);
+        eduCoursePageResult.put("records", courseList);
+        return eduCoursePageResult;
     }
 }

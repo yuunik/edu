@@ -4,8 +4,9 @@ import com.yuunik.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
+import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,5 +28,5 @@ public interface EduCourseService extends IService<EduCourse> {
 
     boolean publishCourse(String id);
 
-    List<EduCourse> getCourseList();
+    Map<String, Object> pageCourseList(long current, long pageSize, CourseQueryVo courseQueryVo);
 }

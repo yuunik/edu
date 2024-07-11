@@ -7,7 +7,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @ApiModel(value = "课程基本信息对象", description = "课程管理介绍")
 @Data
