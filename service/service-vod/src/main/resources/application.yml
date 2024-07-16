@@ -1,0 +1,24 @@
+# 端口号
+server:
+  port: 8003
+
+spring:
+  application:
+    # 服务名
+    name: service-vod
+  servlet:
+    # 文件上传配置
+    multipart:
+      # 单个文件大小
+      max-file-size: 1024MB
+      # 总大小
+      max-request-size: 1024MB
+
+# 阿里云 vod 配置
+aliyun:
+  vod:
+    file:
+      # 访问密钥id
+      access-key-id: LTAI5tBgjLQ7v7eX9vhLdaYR
+      # 访问密钥
+      access-key-secret: WbC7aXsRYMGnr02Z3gQiRPWubo1PCU

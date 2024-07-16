@@ -10,12 +10,10 @@ import com.yuunik.eduservice.mapper.EduChapterMapper;
 import com.yuunik.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.eduservice.service.EduVideoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
