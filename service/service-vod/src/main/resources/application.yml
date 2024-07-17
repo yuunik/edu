@@ -13,3 +13,16 @@ spring:
       max-file-size: 1024MB
       # 总大小
       max-request-size: 1024MB
+  cloud:
+    nacos:
+      discovery:
+        # nacos 服务地址
+        server-addr: 127.0.0.1:8848
+# 阿里云 vod 配置
+aliyun:
+  vod:
+    file:
+      # 访问密钥id
+      access-key-id: LTAI5tBgjLQ7v7eX9vhLdaYR
+      # 访问密钥
+      access-key-secret: WbC7aXsRYMGnr02Z3gQiRPWubo1PCU

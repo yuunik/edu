@@ -37,8 +37,8 @@ public class EduVideoController {
     @ApiOperation("删除课程小节")
     @DeleteMapping("/removeVideo/{id}")
     public R removeVideo(@ApiParam(name = "id", value = "课程小节 id", required = true) @PathVariable String id) {
-        boolean result = eduVideoService.removeById(id);
-        return result ? R.ok() : R.error();
+        eduVideoService.removeVideoById(id);
+        return R.ok();
     }
 
     @ApiOperation("修改课程小节")

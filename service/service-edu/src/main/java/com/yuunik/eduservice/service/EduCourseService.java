@@ -29,4 +29,6 @@ public interface EduCourseService extends IService<EduCourse> {
     boolean publishCourse(String id);
 
     Map<String, Object> pageCourseList(long current, long pageSize, CourseQueryVo courseQueryVo);
+
+    void removeCourse(String id);
 }

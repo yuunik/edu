@@ -10,9 +10,11 @@ import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.eduservice.mapper.EduCourseMapper;
+import com.yuunik.eduservice.service.EduChapterService;
 import com.yuunik.eduservice.service.EduCourseDescriptionService;
 import com.yuunik.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuunik.eduservice.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,12 @@ import java.util.Map;
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+
+    @Autowired
+    private EduVideoService eduVideoService;
+
+    @Autowired
+    private EduChapterService eduChapterService;
 
     // 新增课程基本信息
     @Override
@@ -172,5 +180,22 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCoursePageResult.put("total", resultTotal);
         eduCoursePageResult.put("records", courseList);
         return eduCoursePageResult;
+    }
+
+    // 删除课程
+    @Override
+    public void removeCourse(String id) {
+        // 删除课程小节
+        eduVideoService.removeVideoByCourseId(id);
+        // 删除课程章节
+        eduChapterService.removeChapterByCourseId(id);
+        // 删除课程描述
+        eduCourseDescriptionService.removeCourseDescription(id);
+        // 删除课程
+        boolean result = this.removeById(id);
+        if (!result) {
+            // 删除课程失败
+            throw new YuunikException(20001, "删除课程失败");
+        }
     }
 }

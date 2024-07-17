@@ -19,6 +19,11 @@ spring:
     # 返回 json 的全局时间格式
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  # nacos 服务地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 # 日志输出相关配置
 # mybatis
