@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 // 服务调用 Feign 客户端
-@FeignClient("service-vod")
+@FeignClient(name = "service-vod", fallback = VodFileDegradeClient.class)
 @Component
 public interface VodClient {
     // 删除视频

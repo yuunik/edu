@@ -7,6 +7,7 @@ import com.yuunik.eduservice.entity.EduVideo;
 import com.yuunik.eduservice.mapper.EduVideoMapper;
 import com.yuunik.eduservice.service.EduVideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuunik.utilscommon.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -73,7 +74,12 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         // 非空判断
         if (!StringUtils.isEmpty(videoSourceId)) {
             // 微服务调用删除视频的方法
-            vodClient.deleteVodVideo(videoSourceId);
+            R r = vodClient.deleteVodVideo(videoSourceId);
+            // 判断是否删除成功
+            if (r.getCode() == 20001) {
+                // 抛出错误
+                throw new YuunikException(20001, "发生熔断");
+            }
         }
         // 调用接口, 删除课程小节
         boolean result = this.removeById(id);

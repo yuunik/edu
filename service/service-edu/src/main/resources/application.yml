@@ -37,3 +37,17 @@ mybatis-plus:
 #  logging:
 #    level:
 #      root: INFO
+
+# 开启熔断器机制
+feign:
+  hystrix:
+    enabled: true
+
+# 设置 hystrix 超时时间, 默认为 1000 ms
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
