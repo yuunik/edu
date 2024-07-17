@@ -10,10 +10,12 @@ import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.vodservice.service.VodService;
 import com.yuunik.vodservice.utils.AliyunVodUtil;
 import com.yuunik.vodservice.utils.ConstantVodUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class VodServiceImpl implements VodService {
@@ -61,6 +63,26 @@ public class VodServiceImpl implements VodService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new YuunikException(20001, "删除视频失败");
+        }
+    }
+
+    // 批量删除阿里云 Vod 视频
+    @Override
+    public void batchDeleteVodVideo(List<String> videoIdList) {
+        try {
+            // 初始化客户端
+            DefaultAcsClient client = AliyunVodUtil.initVodClient(ConstantVodUtil.ACCESS_KEY_ID, ConstantVodUtil.ACCESS_KEY_SECRET);
+            // 创建删除视频的请求对象
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            // 拼接视频id
+            String videoIds = StringUtils.join(videoIdList.toArray(), ",");
+            // 设置视频id
+            request.setVideoIds(videoIds);
+            // 调用删除视频的方法
+            client.getAcsResponse(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new YuunikException(20001, "批量删除视频失败");
         }
     }
 }

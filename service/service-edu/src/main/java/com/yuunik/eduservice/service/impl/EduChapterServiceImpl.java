@@ -100,4 +100,22 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         // 根据删除的结果, 返回成功或失败的响应
         return result > 0;
     }
+
+    // 根据课程 id 删除课程章节
+    @Override
+    public void removeChapterByCourseId(String courseId) {
+        // 查询条件
+        QueryWrapper<EduChapter> eduChapterQueryWrapper = new QueryWrapper<>();
+        eduChapterQueryWrapper.eq("course_id", courseId);
+        // 根据课程章节 id 查询所属的章节数量
+        int chapterNum = this.count(eduChapterQueryWrapper);
+        // 若存在章节, 则删除
+        if (chapterNum > 0) {
+            // 删除课程章节
+            int delete = baseMapper.delete(eduChapterQueryWrapper);
+            if (delete < 1) {
+                throw new YuunikException(20001, "删除课程章节失败");
+            }
+        }
+    }
 }

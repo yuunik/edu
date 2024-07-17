@@ -75,6 +75,11 @@ public class EduCourseController {
         return R.ok().data(eduCoursePageInfo);
     }
 
-
+    @ApiOperation("删除课程")
+    @DeleteMapping("/removeCourse/{id}")
+    public R removeCourse(@ApiParam(name = "id", value = "课程 id", required = true) @PathVariable String id) {
+        eduCourseService.removeCourse(id);
+        return R.ok();
+    }
 }
 

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Api(description = "视频点播 api 接口服务")
 @RestController
 @RequestMapping("/vodservice/video")
@@ -29,6 +31,13 @@ public class VodController {
     @DeleteMapping("/deleteVodVideo/{videoId}")
     public R deleteVodVideo(@ApiParam(name = "videoId", value = "视频id", required = true) @PathVariable String videoId) {
         vodService.deleteVodVideo(videoId);
+        return R.ok();
+    }
+
+    @ApiOperation("删除多个视频")
+    @DeleteMapping("/batchDeleteVodVideo")
+    public R batchDeleteVodVideo(@ApiParam(name = "videoIdList", value = "视频id列表", required = true) @RequestParam("videoList") List<String> videoIdList) {
+        vodService.batchDeleteVodVideo(videoIdList);
         return R.ok();
     }
 }
