@@ -20,8 +20,8 @@
         <module>common</module>
     </modules>
     <version>1.0.0</version>
-    <name>edu-back-end</name>
-    <description>edu-back-end</description>
+    <name>edu</name>
+    <description>edu</description>
 
     <!-- 版本管理 -->
     <properties>
