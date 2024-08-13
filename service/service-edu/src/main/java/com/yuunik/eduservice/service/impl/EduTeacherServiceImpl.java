@@ -4,6 +4,9 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduTeacher;
 import com.yuunik.eduservice.entity.excel.Teacher;
 import com.yuunik.eduservice.lisntener.TeacherExcelListener;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,5 +90,21 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
             e.printStackTrace();
         }
 
+    }
+
+    // 获取最受欢迎的 4 位讲师
+    @Override
+    public List<EduTeacher> getFamousTeacherList() {
+        // 构建条件
+        LambdaQueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<EduTeacher>().lambda();
+        // 排序
+        queryWrapper.orderByDesc(EduTeacher::getSort).last("limit 4");
+        // 查询
+        List<EduTeacher> teacherList = baseMapper.selectList(queryWrapper);
+        if (teacherList == null) {
+            // 输出异常
+            throw new YuunikException(20001, "获取讲师失败");
+        }
+        return teacherList;
     }
 }

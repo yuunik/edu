@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,5 +198,23 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             // 删除课程失败
             throw new YuunikException(20001, "删除课程失败");
         }
+    }
+
+    // 获取8个最热门课程列表
+    @Override
+    public List<EduCourse> getPopularCourseList() {
+        // 构建条件
+        QueryWrapper<EduCourse> eduCourseQueryWrapper = new QueryWrapper<>();
+        // 以观看人数降序排列
+        eduCourseQueryWrapper.orderByDesc("view_count");
+        // 取 8 条信息
+        eduCourseQueryWrapper.last("limit 8");
+        // 调用接口, 获取课程列表
+        List<EduCourse> courseList = this.list(eduCourseQueryWrapper);
+        if (courseList == null) {
+            // 抛出异常
+            throw new YuunikException(20001, "获取热门课程列表失败");
+        }
+        return courseList;
     }
 }

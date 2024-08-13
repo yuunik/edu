@@ -6,6 +6,7 @@ import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,6 @@ public interface EduCourseService extends IService<EduCourse> {
     Map<String, Object> pageCourseList(long current, long pageSize, CourseQueryVo courseQueryVo);
 
     void removeCourse(String id);
+
+    List<EduCourse> getPopularCourseList();
 }
