@@ -4,6 +4,8 @@ import com.yuunik.cmsservice.entity.CrmBanner;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuunik.utilscommon.R;
 
+import java.util.List;
+
 /**
  * <p>
  * 首页banner表 服务类
@@ -23,4 +25,6 @@ public interface CrmBannerService extends IService<CrmBanner> {
     Boolean editBannerById(CrmBanner crmBanner);
 
     CrmBanner getBannerBydId(String id);
+
+    List<CrmBanner> getBannerList();
 }

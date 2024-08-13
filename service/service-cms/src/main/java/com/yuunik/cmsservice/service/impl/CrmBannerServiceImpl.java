@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * <p>
  * 首页banner表 服务实现类
@@ -68,5 +71,11 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
             throw new YuunikException(20001, "获取轮播图失败");
         }
         return crmBanner;
+    }
+
+    // 查询所有轮播图
+    @Override
+    public List<CrmBanner> getBannerList() {
+        return baseMapper.selectList(null);
     }
 }

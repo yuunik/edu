@@ -20,7 +20,7 @@ import java.util.List;
  * @author yuunik
  * @since 2024-08-13
  */
-@Api(description = "后台轮播图管理接口")
+@Api(description = "banner后台管理接口")
 @RestController
 @RequestMapping("/cmsservice/admin")
 @CrossOrigin
