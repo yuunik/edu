@@ -24,7 +24,27 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-
+  # redis 配置
+  redis:
+    # 地址
+    host: www.edu.com
+    # 端口
+    port: 6379
+    # 数据库
+    database: 0
+    # 连接超时时间
+    timeout: 1800000
+    # 连接池配置
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 20
+        # 连接池最大阻塞时间（负数表示没限制）
+        max-wait: -1
+        # 连接池最大空闲连接数
+        max-idle: 5
+        # 连接池最小空闲连接数
+        min-idle: 0
 # 日志输出相关配置
 # mybatis
 mybatis-plus:

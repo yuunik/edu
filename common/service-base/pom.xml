@@ -29,5 +29,9 @@
             <artifactId>common-utils</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -14,6 +14,7 @@ import com.yuunik.eduservice.mapper.EduTeacherMapper;
 import com.yuunik.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -93,6 +94,7 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
     }
 
     // 获取最受欢迎的 4 位讲师
+    @Cacheable(value = "famousTeacherList", key = "'SelectIndexTeachetList'")
     @Override
     public List<EduTeacher> getFamousTeacherList() {
         // 构建条件

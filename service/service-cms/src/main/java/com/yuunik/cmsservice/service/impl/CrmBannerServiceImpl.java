@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.utilscommon.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -74,6 +75,7 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
     }
 
     // 查询所有轮播图
+    @Cacheable(value = "banner", key = "'selectIndexList'")
     @Override
     public List<CrmBanner> getBannerList() {
         return baseMapper.selectList(null);

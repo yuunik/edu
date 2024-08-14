@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.eduservice.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -201,6 +202,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     // 获取8个最热门课程列表
+    @Cacheable(value = "popularCourseList", key = "'SelectIndexCourseList'")
     @Override
     public List<EduCourse> getPopularCourseList() {
         // 构建条件
