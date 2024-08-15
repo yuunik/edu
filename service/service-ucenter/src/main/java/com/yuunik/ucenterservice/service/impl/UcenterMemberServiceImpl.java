@@ -17,6 +17,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * 会员表 服务实现类
@@ -50,14 +52,28 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             throw new YuunikException(20001, "密码不能为空");
         }
 
+        // 默认手机号登录, 若没填手机号, 则为用户名登录
+        LambdaQueryWrapper<UcenterMember> wrapper = null;
+        UcenterMember user = null;
         // 查找用户是否存在
-        LambdaQueryWrapper<UcenterMember> wrapper = new QueryWrapper<UcenterMember>().lambda();
-        wrapper.eq(UcenterMember::getMobile, mobile);
-        // 调用接口, 查询用户是否存在
-        UcenterMember user = this.getOne(wrapper);
-        if (user == null) {
-            // 抛出异常
-            throw new YuunikException(20001, "用户不存在");
+        if (StringUtils.isEmpty(mobile)) {
+            wrapper = new QueryWrapper<UcenterMember>().lambda();
+            wrapper.eq(UcenterMember::getNickname, nickname);
+            // 调用接口, 查询用户是否存在
+            user = this.getOne(wrapper);
+            if (user == null) {
+                // 抛出异常
+                throw new YuunikException(20001, "用户名不存在");
+            }
+        } else {
+            wrapper = new QueryWrapper<UcenterMember>().lambda();
+            wrapper.eq(UcenterMember::getMobile, mobile);
+            // 调用接口, 查询用户是否存在
+            user = this.getOne(wrapper);
+            if (user == null) {
+                // 抛出异常
+                throw new YuunikException(20001, "手机号不存在");
+            }
         }
 
         // 密码核验
@@ -126,5 +142,28 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             // 抛出异常
             throw new YuunikException(20001, "注册失败");
         }
+    }
+
+    // 根据 token, 获取用户信息
+    @Override
+    public UcenterMember checkToken(HttpServletRequest request) {
+        // 检查 token 的有效性
+        boolean isVaild = JwtUtil.checkToken(request);
+        if (!isVaild) {
+            // 抛出异常
+            throw new YuunikException(20001, "token 无效");
+        }
+        // 获取用户 id
+        String id = JwtUtil.getMemberIdByJwtToken(request);
+        // 根据用户 id, 查询用户信息
+        LambdaQueryWrapper<UcenterMember> wrapper = new QueryWrapper<UcenterMember>().lambda();
+        wrapper.eq(UcenterMember::getId, id);
+        UcenterMember userInfo = this.getById(id);
+        // 判断用户信息
+        if (userInfo == null) {
+            // 抛出异常
+            throw new YuunikException(20001, "用户信息不存在");
+        }
+        return userInfo;
     }
 }

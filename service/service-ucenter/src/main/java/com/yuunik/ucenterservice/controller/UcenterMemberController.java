@@ -8,8 +8,11 @@ import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.hibernate.validator.constraintvalidators.RegexpURLValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -39,6 +42,13 @@ public class UcenterMemberController {
     public R register(@ApiParam(name = "registerInfo", value = "用户注册信息", required = true) @RequestBody RegisterInfoVo registerInfo) {
         ucenterMemberService.registerUser(registerInfo);
         return R.ok();
+    }
+
+    @ApiOperation("获取用户信息")
+    @GetMapping("/getUserInfo")
+    public R getUserInfo(HttpServletRequest request) {
+        UcenterMember userInfo = ucenterMemberService.checkToken(request);
+        return R.ok().data("userInfo", userInfo);
     }
 }
 
