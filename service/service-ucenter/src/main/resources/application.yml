@@ -1,0 +1,45 @@
+# 服务端口
+server:
+  port: 8006
+
+spring:
+  application:
+    # 服务名
+    name: service-ucenter
+  # mysql 数据库连接
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://www.edu.com:3306/yuunik?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Chow.1997
+  # redis 数据库连接
+  redis:
+    host: www.edu.com
+    port: 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        # 最大阻塞等待时间（负数表示没限制）
+        max-wait: -1
+        # 最大空闲
+        max-idle: 5
+        # 最小空闲
+        min-idle: 0
+  # 返回 json 的全局时间格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # nacos 服务地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+# mybatis-plus 配置
+mybatis-plus:
+  # 配置 mapper xml 文件的路径
+  mapper-locations: classpath:com/yuunik/ucenterservice/mapper/xml/*.xml
+  # mybatis 日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
