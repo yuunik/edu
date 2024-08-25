@@ -1,6 +1,6 @@
 # 服务端口
 server:
-  port: 8006
+  port: 8160
 
 spring:
   application:
@@ -43,3 +43,13 @@ mybatis-plus:
   # mybatis 日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 微信开发配置常量
+wechat:
+  open:
+    # 微信开放平台 appId
+    app-id: wxed9954c01bb89b47
+    # 微信开放平台 appSecret
+    app-secret: a7482517235173ddb4083788de60b90e
+    # 微信开放平台回调地址
+    redirect-url: http://localhost:8160/api/ucenter/wx/callback
