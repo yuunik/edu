@@ -2,22 +2,27 @@ package com.yuunik.ucenterservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.gson.Gson;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.ucenterservice.entity.UcenterMember;
 import com.yuunik.ucenterservice.entity.vo.RegisterInfoVo;
 import com.yuunik.ucenterservice.mapper.UcenterMemberMapper;
 import com.yuunik.ucenterservice.service.UcenterMemberService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuunik.ucenterservice.utils.HttpClientUtils;
+import com.yuunik.ucenterservice.utils.WechatConstantUtil;
 import com.yuunik.utilscommon.JwtUtil;
 import com.yuunik.utilscommon.MD5;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * <p>
@@ -30,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
+    private static final Logger log = LoggerFactory.getLogger(UcenterMemberServiceImpl.class);
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -165,5 +171,83 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             throw new YuunikException(20001, "用户信息不存在");
         }
         return userInfo;
+    }
+
+    // 微信登录
+    @Override
+    public String loginByWechat(String code, String state) {
+        // 1. 获取code值，临时票据，类似于验证码
+        System.out.println("code = " + code);
+        // 2. 获取state值，和redis中存储的state值进行比对
+        System.out.println("state = " + state);
+        // 向认证服务器发送请求换取 access_token 和 openId
+        String baseAccessTokenUrl =
+                "https://api.weixin.qq.com/sns/oauth2/access_token" +
+                        "?appid=%s" +
+                        "&secret=%s" +
+                        "&code=%s" +
+                        "&grant_type=authorization_code";
+        // 拼接三个参数
+        String accessTokenUrl = String.format(baseAccessTokenUrl, WechatConstantUtil.APP_ID, WechatConstantUtil.APP_SECRET, code);
+        // 发送请求, 获取 access_token 和 openid
+        String accessResultStr = null;
+        try {
+            accessResultStr = HttpClientUtils.get(accessTokenUrl);
+        } catch (Exception e) {
+            throw new YuunikException(20001, "获取用户令牌失败");
+        }
+        // 将结果转换为 map
+        HashMap accessMap = new Gson().fromJson(accessResultStr, HashMap.class);
+        // 获取access_token
+        String accessToken = (String) accessMap.get("access_token");
+        // 获取 openId
+        String openid = (String) accessMap.get("openid");
+
+        // 调用接口, 查询用户是否已存在
+        LambdaQueryWrapper<UcenterMember> wrapper = new QueryWrapper<UcenterMember>().lambda();
+        wrapper.eq(UcenterMember::getOpenid, openid);
+        UcenterMember user = this.getOne(wrapper);
+
+        // 判断用户是否存在, 存在则返回
+        if (user != null) {
+            String token = JwtUtil.getJwtToken(user.getId(), user.getNickname());
+            return token;
+        }
+
+        //访问微信的资源服务器，获取用户信息
+        String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
+                "?access_token=%s" +
+                "&openid=%s";
+        // 拼接参数
+        String userInfoUrl = String.format(baseUserInfoUrl, accessToken, openid);
+        // 发送请求, 获取用户信息
+        String userInfoStr = null;
+        try {
+            userInfoStr = HttpClientUtils.get(userInfoUrl);
+        } catch (Exception e) {
+            throw new YuunikException(20001, "获取用户信息失败");
+        }
+        // 转化为 map
+        HashMap userInfoMap = new Gson().fromJson(userInfoStr, HashMap.class);
+        // 获取用户信息
+        String nickname = (String) userInfoMap.get("nickname");
+        // Object 转换为 int
+        Double sexDouble = (Double) userInfoMap.get("sex");
+        int sex = sexDouble.intValue();
+        String avatar = (String) userInfoMap.get("headimgurl");
+        // 注册用户
+        UcenterMember wechatUser = new UcenterMember();
+        wechatUser.setOpenid(openid);
+        wechatUser.setNickname(nickname);
+        wechatUser.setAvatar(avatar);
+        wechatUser.setSex(sex);
+        int insert = baseMapper.insert(wechatUser);
+        if (insert < 1) {
+            throw new YuunikException(20001, "注册微信用户失败");
+        }
+        // 根据 jwt 工具类, 生成用户令牌 token
+        String token = JwtUtil.getJwtToken(wechatUser.getId(), wechatUser.getNickname());
+
+        return token;
     }
 }

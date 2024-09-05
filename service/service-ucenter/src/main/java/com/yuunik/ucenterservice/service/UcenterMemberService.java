@@ -21,4 +21,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     void registerUser(RegisterInfoVo registerInfo);
 
     UcenterMember checkToken(HttpServletRequest request);
+
+    String loginByWechat(String code, String state);
 }

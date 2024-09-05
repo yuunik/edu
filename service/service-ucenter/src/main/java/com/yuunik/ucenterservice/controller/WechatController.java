@@ -1,9 +1,11 @@
 package com.yuunik.ucenterservice.controller;
 
+import com.yuunik.ucenterservice.service.UcenterMemberService;
 import com.yuunik.ucenterservice.utils.WechatConstantUtil;
 import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import java.net.URLEncoder;
 @RequestMapping("/api/ucenter/wx")
 @CrossOrigin
 public class WechatController {
+
+    @Autowired
+    private UcenterMemberService ucenterMemberService;
 
     @ApiOperation("获取微信登录二维码")
     @GetMapping("/getQRCode")
@@ -49,15 +54,7 @@ public class WechatController {
     @ApiOperation("微信登录回调接口")
     @GetMapping("/callback")
     public String callback(String code, String state) {
-        // 1. 获取code值，临时票据，类似于验证码
-        System.out.println("code = " + code);
-        // 2. 获取state值，和redis中存储的state值进行比对
-        System.out.println("state = " + state);
-
-        // 3. 向认证服务器发送code，获取access_token
-        // 4. 根据access_token获取微信用户信息
-
-
-        return "redirect:";
+        String token = ucenterMemberService.loginByWechat(code, state);
+        return "redirect:http://localhost:6060?token=" + token;
     }
 }

@@ -29,5 +29,33 @@
              on ec.teacher_id = et.id
         where ec.id = #{id}
     </select>
-
+    <!-- 获取前台用户端课程详情信息 -->
+    <select id="selectCourseFrontInfo" resultType="com.yuunik.eduservice.entity.front.CourseInfoVo">
+        select ec.id,
+               ec.title,
+               ec.price,
+               ec.lesson_num as lessonNum,
+               ec.cover,
+               ec.buy_count,
+               ec.view_count,
+               ecd.description,
+               et.id         as teacherId,
+               et.name       as teacherName,
+               et.intro      as teacherIntro,
+               et.avatar     as teacherAvatar,
+               es.id         as subjectParentId,
+               es.title      as subjectParentName,
+               ess.id        as subjectId,
+               ess.title     as subjectName
+        from edu_course ec
+                 join edu_course_description ecd
+                      on ec.id = ecd.id
+                 join edu_teacher et
+                      on ec.teacher_id = et.id
+                 join edu_subject es
+                      on ec.subject_parent_id = es.id
+                 join edu_subject ess
+                      on ec.subject_id = ess.id
+        where ec.id = #{id}
+    </select>
 </mapper>

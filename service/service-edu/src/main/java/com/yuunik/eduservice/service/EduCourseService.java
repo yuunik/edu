@@ -34,4 +34,8 @@ public interface EduCourseService extends IService<EduCourse> {
     void removeCourse(String id);
 
     List<EduCourse> getPopularCourseList();
+
+    Map<String, Object> pageCourseListByCondition(long current, long pageSize, com.yuunik.eduservice.entity.front.CourseQueryVo courseQueryVo);
+
+    Map<String, Object> getCourseFrontInfo(String id);
 }

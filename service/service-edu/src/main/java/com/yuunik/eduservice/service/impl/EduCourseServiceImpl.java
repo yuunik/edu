@@ -1,26 +1,28 @@
 package com.yuunik.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
+import com.yuunik.eduservice.entity.chapter.ChapterVo;
+import com.yuunik.eduservice.entity.front.CourseInfoVo;
+import com.yuunik.eduservice.entity.subject.OneSubject;
 import com.yuunik.eduservice.entity.vo.CourseInfoVO;
 import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.eduservice.mapper.EduCourseMapper;
-import com.yuunik.eduservice.service.EduChapterService;
-import com.yuunik.eduservice.service.EduCourseDescriptionService;
-import com.yuunik.eduservice.service.EduCourseService;
+import com.yuunik.eduservice.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yuunik.eduservice.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduChapterService eduChapterService;
+
+    @Autowired
+    private EduSubjectService eduSubjectService;
 
     // 新增课程基本信息
     @Override
@@ -217,5 +222,68 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new YuunikException(20001, "获取热门课程列表失败");
         }
         return courseList;
+    }
+
+    // 前台用户端条件获取课程列表信息及分类列表
+    @Override
+    public Map<String, Object> pageCourseListByCondition(long current, long pageSize, com.yuunik.eduservice.entity.front.CourseQueryVo courseQueryVo) {
+        Page<EduCourse> page = new Page<>(current, pageSize);
+        LambdaQueryWrapper<EduCourse> wrapper = new QueryWrapper<EduCourse>().lambda();
+        // 获取查询条件
+        String subjectId = "";
+        String subjectParentId = "";
+        String sort = "";
+        // 非空校验
+        if (courseQueryVo != null) {
+            subjectId = courseQueryVo.getSubjectId();
+            subjectParentId = courseQueryVo.getSubjectParentId();
+            sort = courseQueryVo.getSort();
+        }
+        if (!StringUtils.isEmpty(subjectParentId)) {
+            wrapper.eq(EduCourse::getSubjectParentId, subjectParentId);
+        }
+        if (!StringUtils.isEmpty(subjectId)) {
+            wrapper.eq(EduCourse::getSubjectId, subjectId);
+        }
+        if (!StringUtils.isEmpty(sort)) {
+            if ("price".equals(sort)) {
+                wrapper.orderByDesc(EduCourse::getPrice);
+            } else if ("buyCount".equals(sort)) {
+                wrapper.orderByDesc(EduCourse::getBuyCount);
+            } else if ("gmtCreate".equals(sort)) {
+                wrapper.orderByDesc(EduCourse::getGmtCreate);
+            }
+        }
+        // 调用接口, 获取课程列表
+        this.page(page, wrapper);
+        // 调用接口, 获取分类列表
+        List<OneSubject> subjectList = eduSubjectService.getSubjectData();
+        // 封装响应数据
+        Map<String, Object> result = new HashMap<>();
+        result.put("total", page.getTotal());
+        result.put("pages", page.getPages());
+        result.put("current", page.getCurrent());
+        result.put("pageSize", page.getSize());
+        result.put("records", page.getRecords());
+        result.put("hasPrevious", page.hasPrevious());
+        result.put("hasNext", page.hasNext());
+        result.put("courseList", page.getRecords());
+        result.put("subjectList", subjectList);
+
+        return result;
+    }
+
+    // 获取前台用户端课程详情
+    @Override
+    public Map<String, Object> getCourseFrontInfo(String id) {
+        // 调用接口, 获取课程详情
+        CourseInfoVo courseInfo = baseMapper.selectCourseFrontInfo(id);
+        // 调用接口, 获取课程章节信息
+        List<ChapterVo> chapterList = eduChapterService.getChapterList(id);
+        // 封装响应数据
+        Map<String, Object> result = new HashMap<>();
+        result.put("courseInfo", courseInfo);
+        result.put("chapterList", chapterList);
+        return result;
     }
 }

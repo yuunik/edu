@@ -1,12 +1,8 @@
-2024-08-21 10:08:04.602 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
-2024-08-21 10:08:04.615 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
-2024-08-21 16:48:48.956 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m8s690ms8µs400ns).
-2024-08-21 17:58:16.024 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=40m56s581ms641µs700ns).
-2024-08-21 17:59:05.366 [lettuce-nioEventLoop-4-2] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: Connection refused: no further information: www.edu.com/192.168.66.77:6379
-2024-08-21 17:59:27.627 [lettuce-nioEventLoop-4-5] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 17:59:37.732 [lettuce-nioEventLoop-4-6] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 17:59:47.835 [lettuce-nioEventLoop-4-7] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 17:59:57.926 [lettuce-nioEventLoop-4-8] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 18:00:08.138 [lettuce-nioEventLoop-4-9] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 18:00:18.436 [lettuce-nioEventLoop-4-10] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
-2024-08-21 18:00:29.032 [lettuce-nioEventLoop-4-11] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-05 08:58:53.581 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 08:58:53.588 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 09:49:32.338 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 09:49:32.342 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 10:21:38.267 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 10:21:38.285 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 10:22:48.604 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-05 10:22:48.608 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
