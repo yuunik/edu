@@ -40,4 +40,16 @@ public class VodController {
         vodService.batchDeleteVodVideo(videoIdList);
         return R.ok();
     }
+
+    @ApiOperation("根据视频id获取视频播放凭证")
+    @GetMapping("/getVideoAuthByVideoSourceId/{videoSourceId}")
+    public R getVideoAuthByVideoId(@ApiParam(name = "videoSourceId", value = "视频id", required = true) @PathVariable String videoSourceId) {
+        try {
+            String videoAuthCode = vodService.getVideoAuthCode(videoSourceId);
+            return R.ok().data("videoAuth", videoAuthCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+    }
 }

@@ -10,4 +10,6 @@ public interface VodService {
     void deleteVodVideo(String videoId);
 
     void batchDeleteVodVideo(List<String> videoIdList);
+
+    String getVideoAuthCode(String videoSourceId) throws Exception;
 }

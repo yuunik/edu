@@ -6,6 +6,8 @@ import com.aliyun.vod.upload.resp.UploadStreamResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.vodservice.service.VodService;
 import com.yuunik.vodservice.utils.AliyunVodUtil;
@@ -83,6 +85,32 @@ public class VodServiceImpl implements VodService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new YuunikException(20001, "批量删除视频失败");
+        }
+    }
+
+    // 根据视频阿里云oss点播id获取视频播放凭证
+    @Override
+    public String getVideoAuthCode(String videoSourceId) {
+        try {
+
+            // 获取阿里云存储相关常量
+            String accessKeyId = ConstantVodUtil.ACCESS_KEY_ID;
+            String accessKeySecret = ConstantVodUtil.ACCESS_KEY_SECRET;
+            // 初始化
+            DefaultAcsClient client = AliyunVodUtil.initVodClient(accessKeyId, accessKeySecret);
+            // 创建获取视频凭证的请求对象
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+            // 设置视频id
+            request.setVideoId(videoSourceId);
+            // 获取响应
+            GetVideoPlayAuthResponse response = client.getAcsResponse(request);
+            // 获取播放凭证
+            String playAuth = response.getPlayAuth();
+            return playAuth;
+        } catch (Exception e) {
+            // 输出异常信息
+            e.printStackTrace();
+            throw new YuunikException(20001, "获取视频播放凭证失败");
         }
     }
 }

@@ -10,6 +10,7 @@ import com.yuunik.eduservice.mapper.EduChapterMapper;
 import com.yuunik.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.eduservice.service.EduVideoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,9 +58,10 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         for (EduChapter eduChapter: eduChapterList) {
             // 创建章节对象
             chapterVo = new ChapterVo();
-            chapterVo.setKey(eduChapter.getId());
-            chapterVo.setTitle(eduChapter.getTitle());
-            // BeanUtils.copyProperties(eduChapter, chapterVo);
+            // chapterVo.setKey(eduChapter.getId());
+            // chapterVo.setTitle(eduChapter.getTitle());
+
+            BeanUtils.copyProperties(eduChapter, chapterVo);
 
             videoVoList = new ArrayList<>();
             // 遍历课程小节列表
@@ -69,9 +71,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                 // 判断小节所属的章节
                 if (eduVideo.getChapterId().equals(eduChapter.getId())) {
                     // 封装 videoVo
-                    videoVo.setKey(eduVideo.getId());
-                    videoVo.setTitle(eduVideo.getTitle());
-                    // BeanUtils.copyProperties(eduVideo, videoVo);
+                    // videoVo.setKey(eduVideo.getId());
+                    // videoVo.setTitle(eduVideo.getTitle());
+                    BeanUtils.copyProperties(eduVideo, videoVo);
                     // 封装课程小节列表
                     videoVoList.add(videoVo);
                 }
