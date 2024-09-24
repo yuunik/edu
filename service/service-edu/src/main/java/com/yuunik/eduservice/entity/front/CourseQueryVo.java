@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseQueryVo {
+    @ApiModelProperty("课程名称")
+    private String courseName;
+
     @ApiModelProperty("一级分类id")
     private String subjectParentId;
 

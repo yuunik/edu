@@ -1,0 +1,11 @@
+2024-09-08 14:44:57.996 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16h26m6s92ms616µs500ns).
+2024-09-08 14:45:23.363 [lettuce-nioEventLoop-4-14] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: Connection refused: no further information: www.edu.com/192.168.66.77:6379
+2024-09-08 14:45:35.645 [lettuce-nioEventLoop-4-1] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: Connection timed out: no further information: www.edu.com/192.168.66.77:6379
+2024-09-08 14:45:45.711 [lettuce-nioEventLoop-4-2] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:45:55.812 [lettuce-nioEventLoop-4-3] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:46:05.896 [lettuce-nioEventLoop-4-4] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:46:16.110 [lettuce-nioEventLoop-4-5] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:46:26.412 [lettuce-nioEventLoop-4-6] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:46:37.011 [lettuce-nioEventLoop-4-7] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:46:48.096 [lettuce-nioEventLoop-4-8] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379
+2024-09-08 14:47:00.211 [lettuce-nioEventLoop-4-9] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379

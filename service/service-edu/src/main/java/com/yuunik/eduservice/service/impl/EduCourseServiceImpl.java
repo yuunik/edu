@@ -230,14 +230,20 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         Page<EduCourse> page = new Page<>(current, pageSize);
         LambdaQueryWrapper<EduCourse> wrapper = new QueryWrapper<EduCourse>().lambda();
         // 获取查询条件
+        String courseName = "";
         String subjectId = "";
         String subjectParentId = "";
         String sort = "";
         // 非空校验
         if (courseQueryVo != null) {
+            courseName = courseQueryVo.getCourseName();
             subjectId = courseQueryVo.getSubjectId();
             subjectParentId = courseQueryVo.getSubjectParentId();
             sort = courseQueryVo.getSort();
+        }
+        if (!StringUtils.isEmpty(courseName)) {
+            // 课程名称模糊搜索
+            wrapper.like(EduCourse::getTitle, courseName);
         }
         if (!StringUtils.isEmpty(subjectParentId)) {
             wrapper.eq(EduCourse::getSubjectParentId, subjectParentId);

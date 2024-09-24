@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
@@ -25,7 +26,7 @@ public class WechatController {
     @ApiOperation("获取微信登录二维码")
     @GetMapping("/getQRCode/{state}")
     @ResponseBody
-    public R getQRCode(@ApiParam(name = "state", value = "微信回调地址", required = true) @PathVariable String state) {
+    public R getQRCode(@ApiParam(name = "state", value = "微信回调地址端口", required = true) @PathVariable String state) {
         try {
 
             // 微信开放平台授权baseUrl
@@ -40,7 +41,13 @@ public class WechatController {
             // URL编码
             String redirectUrl = URLEncoder.encode(WechatConstantUtil.REDIRECT_URL, "UTF-8");
             // 拼接最终地址
-            String url = String.format(baseUrl, WechatConstantUtil.APP_ID, redirectUrl, state);
+            String url;
+            // 判断是否为空
+            if (StringUtils.isEmpty(state)) {
+                url = String.format(baseUrl, WechatConstantUtil.APP_ID, redirectUrl, state);
+            } else {
+                url = String.format(baseUrl, WechatConstantUtil.APP_ID, redirectUrl, "yuunik");
+            }
 
             return R.ok().data("QRCodeUrl", url);
         } catch (Exception e) {
@@ -54,6 +61,11 @@ public class WechatController {
     @GetMapping("/callback")
     public String callback(String code, String state) {
         String token = ucenterMemberService.loginByWechat(code, state);
-        return "redirect:http://"+ URLDecoder.decode(state) +"?token=" + token;
+        // 判断转发端口号是否为空
+        if (StringUtils.isEmpty(state)) {
+            return "redirect:http://localhost:"+ state +"?token=" + token;
+        }
+        // 默认重定向为3351端口
+        return "redirect:http://localhost:3551?token=" + token;
     }
 }

@@ -52,9 +52,9 @@
                       on ec.id = ecd.id
                  join edu_teacher et
                       on ec.teacher_id = et.id
-                 join edu_subject es
+                 left join edu_subject es
                       on ec.subject_parent_id = es.id
-                 join edu_subject ess
+                 left join edu_subject ess
                       on ec.subject_id = ess.id
         where ec.id = #{id}
     </select>
