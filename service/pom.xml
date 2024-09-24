@@ -20,6 +20,7 @@
         <module>service-cms</module>
         <module>service-sms</module>
         <module>service-ucenter</module>
+        <module>service-order</module>
     </modules>
     <version>1.0.0</version>
     <name>service</name>

@@ -11,8 +11,9 @@ import com.yuunik.ucenterservice.service.UcenterMemberService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.ucenterservice.utils.HttpClientUtils;
 import com.yuunik.ucenterservice.utils.WechatConstantUtil;
-import com.yuunik.utilscommon.JwtUtil;
-import com.yuunik.utilscommon.MD5;
+import com.yuunik.utilscommon.utils.JwtUtil;
+import com.yuunik.utilscommon.utils.MD5;
+import com.yuunik.utilscommon.orderVo.MemberWebVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,6 @@ import java.util.HashMap;
 @Service
 public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, UcenterMember> implements UcenterMemberService {
 
-    private static final Logger log = LoggerFactory.getLogger(UcenterMemberServiceImpl.class);
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -249,5 +249,23 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         String token = JwtUtil.getJwtToken(wechatUser.getId(), wechatUser.getNickname());
 
         return token;
+    }
+
+    // 获取生成订单所需的用户信息
+    @Override
+    public MemberWebVo getUserInfoWeb(String id) {
+        // 条件
+        LambdaQueryWrapper<UcenterMember> wrapper = new QueryWrapper<UcenterMember>().lambda();
+        wrapper.eq(UcenterMember::getId, id);
+        // 调用接口, 查询相关信息
+        UcenterMember ucenterMember = baseMapper.selectOne(wrapper);
+        if (ucenterMember == null) {
+            // 抛出异常
+            throw new YuunikException(20001, "用户信息不存在");
+        }
+        // 根据响应结果, 封装数据
+        MemberWebVo memberWebVo = new MemberWebVo();
+        BeanUtils.copyProperties(ucenterMember, memberWebVo);
+        return memberWebVo;
     }
 }

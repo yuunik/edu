@@ -3,6 +3,7 @@ package com.yuunik.ucenterservice.service;
 import com.yuunik.ucenterservice.entity.UcenterMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuunik.ucenterservice.entity.vo.RegisterInfoVo;
+import com.yuunik.utilscommon.orderVo.MemberWebVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,4 +24,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     UcenterMember checkToken(HttpServletRequest request);
 
     String loginByWechat(String code, String state);
+
+    MemberWebVo getUserInfoWeb(String id);
 }

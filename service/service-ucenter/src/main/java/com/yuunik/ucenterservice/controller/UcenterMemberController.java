@@ -5,6 +5,7 @@ import com.yuunik.ucenterservice.entity.UcenterMember;
 import com.yuunik.ucenterservice.entity.vo.RegisterInfoVo;
 import com.yuunik.ucenterservice.service.UcenterMemberService;
 import com.yuunik.utilscommon.R;
+import com.yuunik.utilscommon.orderVo.MemberWebVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,6 +49,13 @@ public class UcenterMemberController {
     public R getUserInfo(HttpServletRequest request) {
         UcenterMember userInfo = ucenterMemberService.checkToken(request);
         return R.ok().data("userInfo", userInfo);
+    }
+
+    @ApiOperation("获取生成订单所需的用户信息")
+    @GetMapping("/getUserInfoWeb/{id}")
+    public MemberWebVo getUserInfoWeb(@ApiParam(name = "id", value = "用户 id", required = true) @PathVariable String id) {
+        MemberWebVo userInfo = ucenterMemberService.getUserInfoWeb(id);
+        return userInfo;
     }
 }
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuunik.baseserive.exception.YuunikException;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
+import com.yuunik.eduservice.entity.EduTeacher;
 import com.yuunik.eduservice.entity.chapter.ChapterVo;
 import com.yuunik.eduservice.entity.front.CourseInfoVo;
 import com.yuunik.eduservice.entity.subject.OneSubject;
@@ -16,13 +17,13 @@ import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.eduservice.mapper.EduCourseMapper;
 import com.yuunik.eduservice.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuunik.utilscommon.orderVo.CourseWebVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduSubjectService eduSubjectService;
+
+    @Autowired
+    private EduTeacherService eduTeacherService;
 
     // 新增课程基本信息
     @Override
@@ -291,5 +295,35 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         result.put("courseInfo", courseInfo);
         result.put("chapterList", chapterList);
         return result;
+    }
+
+    // 获取生成订单所需的课程信息
+    @Override
+    public CourseWebVo getCourseInfoWeb(String id) {
+        // 条件
+        LambdaQueryWrapper<EduCourse> wrapper = new QueryWrapper<EduCourse>().lambda();
+        wrapper.eq(EduCourse::getId, id);
+        // 调用接口, 查询相关课程信息
+        EduCourse courseInfo = this.getOne(wrapper);
+        // 非空判断
+        if (courseInfo == null) {
+            throw new YuunikException(20001, "暂无相关的课程信息");
+        }
+        // 讲师条件
+        LambdaQueryWrapper<EduTeacher> teacherWrapper = new QueryWrapper<EduTeacher>().lambda();
+        teacherWrapper.eq(EduTeacher::getId, courseInfo.getTeacherId());
+        // 只获取讲师姓名
+        teacherWrapper.select(EduTeacher::getName);
+        // 调用接口, 查询讲师姓名
+        EduTeacher teacherInfo = eduTeacherService.getOne(teacherWrapper);
+        if (StringUtils.isEmpty(teacherInfo.getName())) {
+            // 抛出异常
+            throw new YuunikException(20001, "暂无相关的讲师信息");
+        }
+        // 根据响应结果, 封装响应数据
+        CourseWebVo courseWebVo = new CourseWebVo();
+        BeanUtils.copyProperties(courseInfo, courseWebVo);
+        courseWebVo.setTeacherName(teacherInfo.getName());
+        return courseWebVo;
     }
 }

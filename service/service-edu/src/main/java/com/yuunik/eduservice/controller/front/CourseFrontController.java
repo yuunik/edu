@@ -3,6 +3,7 @@ package com.yuunik.eduservice.controller.front;
 import com.yuunik.eduservice.entity.front.CourseQueryVo;
 import com.yuunik.eduservice.service.EduCourseService;
 import com.yuunik.utilscommon.R;
+import com.yuunik.utilscommon.orderVo.CourseWebVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,6 +34,13 @@ public class CourseFrontController {
     public R getCourseInfo(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
         Map<String, Object> result = eduCourseService.getCourseFrontInfo(id);
         return R.ok().data(result);
+    }
+
+    @ApiOperation("获取生成订单所需的课程信息")
+    @GetMapping("/getCourseInfoForOrder/{id}")
+    public CourseWebVo getCourseInfoWeb(@ApiParam(name = "id", value = "课程 id", required = true) @PathVariable String id) {
+        CourseWebVo courseInfo = eduCourseService.getCourseInfoWeb(id);
+        return courseInfo;
     }
 
 }

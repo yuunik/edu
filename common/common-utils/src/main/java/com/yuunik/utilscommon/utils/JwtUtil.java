@@ -1,10 +1,9 @@
-package com.yuunik.utilscommon;
+package com.yuunik.utilscommon.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +32,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET)
                 .compact();
 
-        return JwtToken;
+        return "Bearer " + JwtToken;
     }
 
     /**
@@ -59,7 +58,9 @@ public class JwtUtil {
      */
     public static boolean checkToken(HttpServletRequest request) {
         try {
-            String jwtToken = request.getHeader("token");
+            String authorization = request.getHeader("Authorization");
+            if (authorization == null && authorization.startsWith("Bearer ")) return false;
+            String jwtToken = authorization.substring(7);
             if(StringUtils.isEmpty(jwtToken)) return false;
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         } catch (Exception e) {
@@ -75,7 +76,7 @@ public class JwtUtil {
      * @return
      */
     public static String getMemberIdByJwtToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader("token");
+        String jwtToken = request.getHeader("Authorization").substring("Bearer ".length());
         if(StringUtils.isEmpty(jwtToken)) return "";
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         Claims claims = claimsJws.getBody();

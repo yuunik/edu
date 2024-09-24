@@ -1,4 +1,4 @@
-package com.yuunik.utilscommon;
+package com.yuunik.utilscommon.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
