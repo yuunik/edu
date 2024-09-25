@@ -52,15 +52,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
         // 获取用户 id
         String memberId = JwtUtil.getMemberIdByJwtToken(request);
-        // 重复提交校验
-        LambdaQueryWrapper<Order> wrapper = new QueryWrapper<Order>().lambda();
-        wrapper.eq(Order::getCourseId, courseId).eq(Order::getMemberId, memberId);
-        // 调用接口, 查询本次生成的订单是否已存在
-        Integer count = baseMapper.selectCount(wrapper);
-        if (count > 0) {
-            // 重复提交
-            throw new YuunikException(20001, "请勿重复提交!");
-        }
         // 服务调用, 获取所需的课程信息
         CourseWebVo courseInfo = courseClient.getCourseInfoWeb(courseId);
         // 服务调用, 获取所需的用户信息

@@ -44,3 +44,19 @@ mybatis-plus:
   configuration:
     # mybatis 输出日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 微信支付配置
+wechat:
+  pay:
+    #关联的公众号appid
+    app-id: wx74862e0dfcf69954
+    #商户号
+    partner-id: 1558950191
+    #商户key
+    partner-key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    #回调地址
+    notify-url: http://guli.shop/api/order/weixinPay/weixinNotify
+    # 微信支付二维码请求路径
+    domain: https://api.mch.weixin.qq.com/pay/unifiedorder
+    # 微信支付状态查询路径
+    query-order-domain: https://api.mch.weixin.qq.com/pay/orderquery
