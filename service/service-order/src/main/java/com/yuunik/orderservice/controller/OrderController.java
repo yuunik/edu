@@ -7,6 +7,8 @@ import com.yuunik.utilscommon.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/orderservice/order")
 @CrossOrigin
 public class OrderController {
+    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     private OrderService orderService;
 
@@ -42,6 +45,14 @@ public class OrderController {
     public R getOrderInfo(@ApiParam(name = "orderNo", value = "订单号", required = true) @PathVariable String orderNo) {
         Order order = orderService.getOrderInfo(orderNo);
         return R.ok().data("order", order);
+    }
+
+    @ApiOperation("查询用户是否购买过该课程")
+    @GetMapping("/isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@ApiParam(name = "courseId", value = "课程id", required = true) @PathVariable String courseId,
+                              @ApiParam(name = "memberId", value = "用户id", required = true) @PathVariable String memberId) {
+        boolean isBuy = orderService.isBuyCourse(courseId, memberId);
+        return isBuy;
     }
 }
 

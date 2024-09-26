@@ -15,9 +15,9 @@ import java.util.List;
 public interface VodClient {
     // 删除视频
     @DeleteMapping("/vodservice/video/deleteVodVideo/{videoId}")
-    public R deleteVodVideo(@PathVariable("videoId") String videoId);
+    R deleteVodVideo(@PathVariable("videoId") String videoId);
 
     // 批量删除视频
     @DeleteMapping("/vodservice/video/batchDeleteVodVideo")
-    public R batchDeleteVodVideo(@RequestParam("videoList") List<String> videoIdList);
+    R batchDeleteVodVideo(@RequestParam("videoList") List<String> videoIdList);
 }

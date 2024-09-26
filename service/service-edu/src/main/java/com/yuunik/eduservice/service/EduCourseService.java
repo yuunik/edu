@@ -7,6 +7,7 @@ import com.yuunik.eduservice.entity.vo.CoursePublishVo;
 import com.yuunik.eduservice.entity.vo.CourseQueryVo;
 import com.yuunik.utilscommon.orderVo.CourseWebVo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public interface EduCourseService extends IService<EduCourse> {
 
     Map<String, Object> pageCourseListByCondition(long current, long pageSize, com.yuunik.eduservice.entity.front.CourseQueryVo courseQueryVo);
 
-    Map<String, Object> getCourseFrontInfo(String id);
+    Map<String, Object> getCourseFrontInfo(String id, HttpServletRequest request);
 
     CourseWebVo getCourseInfoWeb(String id);
 }

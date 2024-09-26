@@ -154,6 +154,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
         payLog.setTotalFee(order.getTotalFee());
         payLog.setTransactionId(payResult.get("transaction_id"));
         payLog.setTradeState(payResult.get("trade_state"));
+        payLog.setPayType(1);
         payLog.setAttr(JSON.toJSONString(payResult));
         // 调用接口, 新增支付日志
         boolean isAdd = this.save(payLog);

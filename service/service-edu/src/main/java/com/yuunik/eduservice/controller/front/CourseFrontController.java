@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Api(description = "前台用户课程接口")
@@ -31,8 +32,8 @@ public class CourseFrontController {
 
     @ApiOperation("获取课程详情")
     @GetMapping("/getCourseInfo/{id}")
-    public R getCourseInfo(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
-        Map<String, Object> result = eduCourseService.getCourseFrontInfo(id);
+    public R getCourseInfo(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id, HttpServletRequest request) {
+        Map<String, Object> result = eduCourseService.getCourseFrontInfo(id, request);
         return R.ok().data(result);
     }
 

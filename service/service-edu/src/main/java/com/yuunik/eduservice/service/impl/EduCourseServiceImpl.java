@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuunik.baseserive.exception.YuunikException;
+import com.yuunik.eduservice.client.OrderClient;
 import com.yuunik.eduservice.entity.EduCourse;
 import com.yuunik.eduservice.entity.EduCourseDescription;
 import com.yuunik.eduservice.entity.EduTeacher;
@@ -18,12 +19,14 @@ import com.yuunik.eduservice.mapper.EduCourseMapper;
 import com.yuunik.eduservice.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuunik.utilscommon.orderVo.CourseWebVo;
+import com.yuunik.utilscommon.utils.JwtUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +55,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduTeacherService eduTeacherService;
+
+    @Autowired
+    private OrderClient orderClient;
 
     // 新增课程基本信息
     @Override
@@ -285,15 +291,24 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     // 获取前台用户端课程详情
     @Override
-    public Map<String, Object> getCourseFrontInfo(String id) {
+    public Map<String, Object> getCourseFrontInfo(String id, HttpServletRequest request) {
         // 调用接口, 获取课程详情
         CourseInfoVo courseInfo = baseMapper.selectCourseFrontInfo(id);
         // 调用接口, 获取课程章节信息
         List<ChapterVo> chapterList = eduChapterService.getChapterList(id);
+        // 获取用户的id
+        String memberId = JwtUtil.getMemberIdByJwtToken(request);
+        if (memberId == null) {
+            // 未登录
+            throw new YuunikException(20001, "请登录!");
+        }
+        // 微服务调用, 判断该课程是否被购买过
+        boolean isBuy = orderClient.isBuyCourse(id, memberId);
         // 封装响应数据
         Map<String, Object> result = new HashMap<>();
         result.put("courseInfo", courseInfo);
         result.put("chapterList", chapterList);
+        result.put("isBuy", isBuy);
         return result;
     }
 

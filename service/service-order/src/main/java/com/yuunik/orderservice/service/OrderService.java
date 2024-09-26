@@ -18,4 +18,6 @@ public interface OrderService extends IService<Order> {
     String addOrderByCourseId(String courseId, int payType, HttpServletRequest request);
 
     Order getOrderInfo(String orderNo);
+
+    boolean isBuyCourse(String courseId, String memberId);
 }

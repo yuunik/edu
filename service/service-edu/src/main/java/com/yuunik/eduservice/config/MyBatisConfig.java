@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MapperScan(basePackages = "com.yuunik.eduservice.mapper")
-public class ApplicationConfig {
+public class MyBatisConfig {
     /**
      * 逻辑删除插件
      */

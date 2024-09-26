@@ -91,4 +91,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
         return order;
     }
+
+    // 是否购买过某课程
+    @Override
+    public boolean isBuyCourse(String courseId, String memberId) {
+        // 条件
+        LambdaQueryWrapper<Order> wrapper = new QueryWrapper<Order>().lambda();
+        wrapper.eq(Order::getCourseId, courseId).eq(Order::getMemberId, memberId).eq(Order::getStatus, 1);
+        // 调用接口, 查询订单
+        int count = this.count(wrapper);
+        if (count > 0 ) {
+            return true;
+        }
+        return false;
+    }
 }

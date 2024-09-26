@@ -22,7 +22,6 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-
         <!-- 统一返回结果模块 -->
         <dependency>
             <groupId>com.yuunik</groupId>
@@ -32,6 +31,10 @@
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
         </dependency>
     </dependencies>
 </project>

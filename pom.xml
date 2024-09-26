@@ -49,6 +49,7 @@
         <canal.client.version>1.1.0</canal.client.version>
         <docker.image.prefix>zx</docker.image.prefix>
         <cloud-alibaba.version>0.2.2.RELEASE</cloud-alibaba.version>
+        <open-feign.version>2.2.1.RELEASE</open-feign.version>
     </properties>
 
     <!-- 依赖管理 -->
@@ -68,6 +69,12 @@
                 <version>${cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud Starter OpenFeign -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${open-feign.version}</version>
             </dependency>
             <!--mybatis-plus 持久层-->
             <dependency>
