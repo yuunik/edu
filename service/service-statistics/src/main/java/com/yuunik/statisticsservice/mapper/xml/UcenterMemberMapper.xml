@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuunik.statisticsservice.mapper.UcenterMemberMapper">
+    <!-- 获取当日的注册用户人数 -->
+    <select id="selectNumberRegistered" resultType="int">
+        select count(*)
+        from ucenter_member
+        where DATE (gmt_create)=#{date}
+    </select>
+</mapper>

@@ -8,8 +8,10 @@ import com.yuunik.statisticsservice.client.UcenterClient;
 import com.yuunik.statisticsservice.entity.StatisticsDaily;
 import com.yuunik.statisticsservice.entity.vo.ChartVo;
 import com.yuunik.statisticsservice.mapper.StatisticsDailyMapper;
+import com.yuunik.statisticsservice.service.EduCourseService;
 import com.yuunik.statisticsservice.service.StatisticsDailyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuunik.statisticsservice.service.UcenterMemberService;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,10 @@ import java.util.*;
 @Service
 public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMapper, StatisticsDaily> implements StatisticsDailyService {
     @Autowired
-    private UcenterClient ucenterClient;
+    private EduCourseService eduCourseService;
 
     @Autowired
-    private EduClient eduClient;
+    private UcenterMemberService ucenterMemberService;
 
     // 统计每日数据
     @Override
@@ -49,13 +51,13 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
             }
         }
         // 获取当日的注册人数
-        int numberRegistered = ucenterClient.getNumberRegistered(date);
+        int numberRegistered = ucenterMemberService.getNumberRegistered(date);
         // 获取当日的登录人数
         int numberLogin = RandomUtils.nextInt(100, 1000);
         // 获取当日的课程播放数
         int numberPlay = RandomUtils.nextInt(100, 1000);
         // 获取当日的课程数
-        int numberAddCourse = eduClient.getNumberAddCourse(date);
+        int numberAddCourse = eduCourseService.getNumberAddCourse(date);
         // 封装数据
         StatisticsDaily statisticsDaily = new StatisticsDaily();
         statisticsDaily.setDateCalculated(date);
