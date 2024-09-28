@@ -49,6 +49,9 @@ spring:
           uri: lb://service-ucenter
           predicates:
             - Path=/ucenterservice/**
+        - id: WeChatLogin
+          uri: lb://service-ucenter
+          predicates:
             - Path=/api/ucenter/**
         # 订单 api 接口服务
         - id: service-order
