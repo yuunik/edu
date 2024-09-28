@@ -25,7 +25,6 @@ import java.util.Map;
 @Api(description = "课程管理模块接口")
 @RestController
 @RequestMapping("/eduservice/course")
-@CrossOrigin
 public class EduCourseController {
     @Autowired
     private EduCourseService eduCourseService;
@@ -40,14 +39,14 @@ public class EduCourseController {
 
     @ApiOperation("获取课程详情")
     @GetMapping("/getCourseInfo/{courseId}")
-    public R getCourseInfo(@PathVariable String courseId){
+    public R getCourseInfo(@PathVariable String courseId) {
         CourseInfoVO courseInfoVO = eduCourseService.selectCourseInfo(courseId);
         return R.ok().data("courseInfo", courseInfoVO);
     }
 
     @ApiOperation("修改课程信息")
     @PostMapping("/editCourseInfo")
-    public R editCourseInfo(@ApiParam(name = "courseInfo", value = "课程信息", required = true)@RequestBody CourseInfoVO courseInfoVO) {
+    public R editCourseInfo(@ApiParam(name = "courseInfo", value = "课程信息", required = true) @RequestBody CourseInfoVO courseInfoVO) {
         eduCourseService.updateCourseInfo(courseInfoVO);
         return R.ok();
     }

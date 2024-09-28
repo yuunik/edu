@@ -23,7 +23,6 @@ import java.util.Map;
 @Api(description = "支付日志接口")
 @RestController
 @RequestMapping("/orderservice/payLog")
-@CrossOrigin
 public class PayLogController {
     @Autowired
     private PayLogService payLogService;
@@ -39,7 +38,7 @@ public class PayLogController {
     @GetMapping("/queryWeChatPayStatus/{orderNo}")
     public R queryWeChatPayStatus(@ApiParam(name = "orderNo", value = "订单号", required = true) @PathVariable String orderNo) {
         Map<String, String> payResult = payLogService.queryPaylogStatus(orderNo);
-        System.out.println("返回结果 ---> " +  payResult);
+        System.out.println("返回结果 ---> " + payResult);
         if (payResult == null) {
             // 支付失败
             return R.error().message("支付失败, 请稍后再试...");

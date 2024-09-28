@@ -15,14 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(description = "阿里云oss上传接口")
 @RestController
 @RequestMapping("/ossservice/file")
-@CrossOrigin
 public class OssController {
     @Autowired
     private OssService ossSerivce;
 
     @ApiOperation("上传文件")
     @PostMapping("/upload")
-    public R uploadFile(@ApiParam(name = "file", value = "文件", required = true)MultipartFile file) {
+    public R uploadFile(@ApiParam(name = "file", value = "文件", required = true) MultipartFile file) {
         try {
             String url = ossSerivce.uploadFile(file);
             return R.ok().data("url", url);

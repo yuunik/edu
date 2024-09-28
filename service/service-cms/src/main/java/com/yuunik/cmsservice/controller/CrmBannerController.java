@@ -23,7 +23,6 @@ import java.util.List;
 @Api(description = "banner后台管理接口")
 @RestController
 @RequestMapping("/cmsservice/admin")
-@CrossOrigin
 public class CrmBannerController {
     @Autowired
     private CrmBannerService crmBannerService;

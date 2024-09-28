@@ -26,7 +26,6 @@ import java.util.List;
 @Api(description = "课程分类管理接口")
 @RestController
 @RequestMapping("/eduservice/subject")
-@CrossOrigin
 public class EduSubjectController {
     @Autowired
     private EduSubjectService eduSubjectService;
@@ -44,7 +43,7 @@ public class EduSubjectController {
 
     @ApiOperation("导入课程分类文件")
     @PostMapping("/import")
-    public R importSubjectData(@ApiParam(name = "file", value = "课程分类文件", required = true)MultipartFile file) {
+    public R importSubjectData(@ApiParam(name = "file", value = "课程分类文件", required = true) MultipartFile file) {
         try {
             // 调用接口, 导入课程分类文件
             eduSubjectService.importSubjectData(file, eduSubjectService);

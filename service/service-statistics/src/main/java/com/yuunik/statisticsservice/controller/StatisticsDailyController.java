@@ -25,7 +25,6 @@ import java.util.Map;
 @Api(description = "网站统计日数据接口")
 @RestController
 @RequestMapping("/statisticsservice/statistics")
-@CrossOrigin
 public class StatisticsDailyController {
 
     @Autowired

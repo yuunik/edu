@@ -9,7 +9,9 @@
 
     <artifactId>canal-educlient</artifactId>
     <version>1.0.0</version>
-    <description>监听linux数据库数据</description>
+    <description>
+        canal数据库表同步模块（统计同步数据）
+    </description>
     <name>canal-educlient</name>
 
     <properties>

@@ -19,6 +19,7 @@
         <module>service</module>
         <module>common</module>
         <module>canal-educlient</module>
+        <module>infrastructure</module>
     </modules>
     <version>1.0.0</version>
     <name>edu</name>
@@ -127,8 +128,8 @@
             </dependency>
             <!--文件上传-->
             <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
             </dependency>
             <!--commons-io-->
@@ -166,7 +167,7 @@
                 <version>${aliyun-sdk-oss.version}</version>
             </dependency>
             <dependency>
-            <groupId>com.aliyun</groupId>
+                <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-vod</artifactId>
                 <version>${aliyun-java-sdk-vod.version}</version>
             </dependency>

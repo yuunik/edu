@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(description = "订单管理接口")
 @RestController
 @RequestMapping("/orderservice/order")
-@CrossOrigin
 public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     @Autowired
@@ -50,7 +49,7 @@ public class OrderController {
     @ApiOperation("查询用户是否购买过该课程")
     @GetMapping("/isBuyCourse/{courseId}/{memberId}")
     public boolean isBuyCourse(@ApiParam(name = "courseId", value = "课程id", required = true) @PathVariable String courseId,
-                              @ApiParam(name = "memberId", value = "用户id", required = true) @PathVariable String memberId) {
+                               @ApiParam(name = "memberId", value = "用户id", required = true) @PathVariable String memberId) {
         boolean isBuy = orderService.isBuyCourse(courseId, memberId);
         return isBuy;
     }

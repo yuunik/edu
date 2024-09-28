@@ -18,7 +18,6 @@ import java.util.List;
 @Api(description = "前台首页数据接口")
 @RestController
 @RequestMapping("/eduservice/index")
-@CrossOrigin
 public class IndexFrontController {
     @Autowired
     private EduCourseService eduCourseService;

@@ -14,7 +14,6 @@ import java.util.List;
 @Api(description = "视频点播 api 接口服务")
 @RestController
 @RequestMapping("/vodservice/video")
-@CrossOrigin
 public class VodController {
 
     @Autowired

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(description = "用户登录接口")
 @RestController
 @RequestMapping("/ucenterservice/member")
-@CrossOrigin
 public class UcenterMemberController {
     @Autowired
     private UcenterMemberService ucenterMemberService;

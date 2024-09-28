@@ -1,0 +1,8 @@
+2024-09-27 08:28:24.847 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13h25m39s835ms206µs300ns).
+2024-09-27 08:41:35.562 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-27 08:41:35.568 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-27 08:54:27.827 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-27 08:54:27.832 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2024-09-27 18:02:24.917 [lettuce-nioEventLoop-4-2] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: Connection refused: no further information: www.edu.com/192.168.66.77:6379
+2024-09-27 18:02:31.186 [lettuce-nioEventLoop-4-5] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: Connection refused: no further information: www.edu.com/192.168.66.77:6379
+2024-09-27 18:02:51.353 [lettuce-nioEventLoop-4-7] WARN  io.lettuce.core.protocol.ConnectionWatchdog - Cannot reconnect to [www.edu.com:6379]: connection timed out: www.edu.com/192.168.66.77:6379

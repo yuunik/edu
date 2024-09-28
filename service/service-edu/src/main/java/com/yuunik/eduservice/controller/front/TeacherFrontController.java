@@ -14,7 +14,6 @@ import java.util.Map;
 @Api(description = "前端用户系统讲师接口")
 @RestController
 @RequestMapping("/eduservice/front-end/teacher")
-@CrossOrigin
 public class TeacherFrontController {
     @Autowired
     private EduTeacherService eduTeacherService;

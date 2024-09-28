@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 @Api(description = "阿里云短信服务接口")
 @RestController
 @RequestMapping("/smsservice/sms")
-@CrossOrigin
 public class SmsController {
     @Autowired
     private SmsService smsService;

@@ -17,7 +17,6 @@ import java.net.URLEncoder;
 @Api(description = "微信登录接口")
 @Controller
 @RequestMapping("/api/ucenter/wx")
-@CrossOrigin
 public class WechatController {
 
     @Autowired
@@ -63,7 +62,7 @@ public class WechatController {
         String token = ucenterMemberService.loginByWechat(code, state);
         // 判断转发端口号是否为空
         if (StringUtils.isEmpty(state)) {
-            return "redirect:http://localhost:"+ state +"?token=" + token;
+            return "redirect:http://localhost:" + state + "?token=" + token;
         }
         // 默认重定向为3351端口
         return "redirect:http://localhost:3551?token=" + token;
