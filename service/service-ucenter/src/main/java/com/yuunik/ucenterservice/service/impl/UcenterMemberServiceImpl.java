@@ -268,4 +268,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         BeanUtils.copyProperties(ucenterMember, memberWebVo);
         return memberWebVo;
     }
+
+    // 获取当前的注册用户人数
+    @Override
+    public int queryNumberRegistered(String date) {
+        return baseMapper.selectNumberRegistered(date);
+    }
 }

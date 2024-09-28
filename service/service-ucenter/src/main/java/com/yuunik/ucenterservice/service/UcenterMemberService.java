@@ -26,4 +26,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     String loginByWechat(String code, String state);
 
     MemberWebVo getUserInfoWeb(String id);
+
+    int queryNumberRegistered(String date);
 }

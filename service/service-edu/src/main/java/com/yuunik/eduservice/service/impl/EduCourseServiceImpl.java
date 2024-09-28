@@ -341,4 +341,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseWebVo.setTeacherName(teacherInfo.getName());
         return courseWebVo;
     }
+
+    // 获取当日新增课程数
+    @Override
+    public int getNumberAddCourse(String date) {
+        return baseMapper.selectNumberAddCourse(date);
+    }
 }

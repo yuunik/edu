@@ -42,4 +42,6 @@ public interface EduCourseService extends IService<EduCourse> {
     Map<String, Object> getCourseFrontInfo(String id, HttpServletRequest request);
 
     CourseWebVo getCourseInfoWeb(String id);
+
+    int getNumberAddCourse(String date);
 }

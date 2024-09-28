@@ -18,4 +18,6 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
     CoursePublishVo selectCoursePublishInfo(String id);
     // 获取前台用户端课程详情信息
     CourseInfoVo selectCourseFrontInfo(String id);
+    // 获取当日新增课程数
+    int selectNumberAddCourse(String date);
 }

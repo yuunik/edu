@@ -57,5 +57,12 @@ public class UcenterMemberController {
         MemberWebVo userInfo = ucenterMemberService.getUserInfoWeb(id);
         return userInfo;
     }
+
+    @ApiOperation("获取当日注册用户人数")
+    @GetMapping("/getNumberRegistered/{date}")
+    public int getNumberRegistered(@ApiParam(name = "date", value = "日期", required = true) @PathVariable String date) {
+        int count = ucenterMemberService.queryNumberRegistered(date);
+        return count;
+    }
 }
 

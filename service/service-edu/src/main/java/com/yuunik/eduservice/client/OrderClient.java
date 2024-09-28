@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "service-order")
+@FeignClient(name = "service-order", fallback = OrderFileDegradeClient.class)
 @Component
 public interface OrderClient {
     // 判断课程是否被购买

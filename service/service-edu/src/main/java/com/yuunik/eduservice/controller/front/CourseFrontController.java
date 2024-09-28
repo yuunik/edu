@@ -44,4 +44,10 @@ public class CourseFrontController {
         return courseInfo;
     }
 
+    @ApiOperation("获取当日新增的课程数")
+    @GetMapping("/getNumberAddCourse/{date}")
+    public int getNumberAddCourse(@ApiParam(name = "date", value = "日期", required = true) @PathVariable String date) {
+        return eduCourseService.getNumberAddCourse(date);
+    }
+
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * 课程微服务客户端接口
  */
-@FeignClient(name = "service-edu")
+@FeignClient(name = "service-edu", fallback = CourseClientBreaker.class)
 @Component
 public interface CourseClient {
     /**

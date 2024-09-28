@@ -58,4 +58,8 @@
                       on ec.subject_id = ess.id
         where ec.id = #{id}
     </select>
+    <!-- 获取当日新增的课程数 -->
+    <select id="selectNumberAddCourse" resultType="int">
+        select count(*) from edu_course where DATE(gmt_create)=#{date}
+    </select>
 </mapper>
