@@ -43,7 +43,7 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         if (oldData != null) {
             // 存在旧数据, 则删除
             int isDelete = baseMapper.deleteById(oldData);
-            if (isDelete < 0) {
+            if (isDelete == 0) {
                 // 抛出异常
                 throw new YuunikException(20001, "删除旧统计数据失败!");
             }

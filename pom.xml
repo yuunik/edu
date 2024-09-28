@@ -18,6 +18,7 @@
     <modules>
         <module>service</module>
         <module>common</module>
+        <module>canal-educlient</module>
     </modules>
     <version>1.0.0</version>
     <name>edu</name>
