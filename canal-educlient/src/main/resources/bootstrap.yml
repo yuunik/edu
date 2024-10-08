@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 2b66700f-9222-4bb5-81c0-3874c0f40d72
+        file-extension: yaml
+  profiles:
+    active: dev
+  application:
+    name: canal-educlient

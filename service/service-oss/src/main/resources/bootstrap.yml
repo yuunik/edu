@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 命名空间
+        namespace: 2b66700f-9222-4bb5-81c0-3874c0f40d72
+        # 配置文件的后缀名
+        file-extension: yaml
+        # 多个配置文件配置
+        ext-config[0]:
+          # nacos 配置
+          data-id: nacos-config.yaml
+          refresh: true
+  # 环境设置: dev, test, prod
+  profiles:
+    active: dev
+  # 服务名
+  application:
+    name: service-oss

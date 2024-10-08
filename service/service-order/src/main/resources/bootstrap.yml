@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 2b66700f-9222-4bb5-81c0-3874c0f40d72
+        file-extension: yaml
+        # 多个配置文件配置
+        ext-config[0]:
+          # mysql 数据库配置文件
+          data-id: mysql-config.yaml
+          refresh: true
+        ext-config[1]:
+          # nacos 配置
+          data-id: nacos-config.yaml
+          refresh: true
+  profiles:
+    active: dev
+  application:
+    name: service-order
